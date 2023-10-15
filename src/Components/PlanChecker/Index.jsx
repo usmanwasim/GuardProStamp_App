@@ -3,11 +3,6 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import PlanTab1 from "./PlanTab1";
 import PlanTab2 from "./PlanTab2";
-// socket connection
-import { io } from "socket.io-client";
-// Socket.IO connection
-export const Socket = io.connect(`${import.meta.env.VITE_BASE_URL}`);
-// -==-==-=-=-=-=-=-=-=-=-=-=====-==
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -38,23 +33,12 @@ function a11yProps(index) {
 }
 export default function Index() {
   const [activeChatID, setactiveChatID] = useState();
-  const [tab1State, setTab1State] = useState(false);
+  const [tab2State, setTab2State] = useState(true);
   // Tabs state
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // socket User Connected And reference stored to online users
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  let jwtToken = sessionStorage.getItem("jwt-token");
-  useEffect(() => {
-    if (jwtToken && userData?.id) {
-      Socket.on("connect", () => {
-        console.log("socket connected", Socket.id, userData);
-        Socket.emit("join", userData?.id);
-      });
-    }
-  }, [userData?.id, jwtToken]);
 
   return (
     <Box>
@@ -97,15 +81,15 @@ export default function Index() {
         <CustomTabPanel value={value} index={0}>
           <PlanTab1
             setValue={setValue}
-            setTab1State={setTab1State}
+            setTab2State={setTab2State}
             setactiveChatID={setactiveChatID}
           />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <PlanTab2
             // chat list & add chat state
-            state={tab1State}
-            setState={setTab1State}
+            state={tab2State}
+            setState={setTab2State}
             // active chat id
             activeChatID={activeChatID}
             setactiveChatID={setactiveChatID}

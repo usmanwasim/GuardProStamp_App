@@ -22,12 +22,12 @@ import axiosApiInstance from "../../api/api";
 
 PlanTab1.propTypes = {
   setValue: PropTypes.func,
-  setTab1State: PropTypes.func,
+  setTab2State: PropTypes.func,
   setactiveChatID: PropTypes.func,
 };
 
 const options = ["Option 1", "Option 2", "Option 3"];
-export default function PlanTab1({ setValue, setTab1State, setactiveChatID }) {
+export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   const [state, setState] = useState(false);
   const [licenseDetail, setLicenseDetail] = useState({});
   const [data, setData] = useState({
@@ -69,7 +69,7 @@ export default function PlanTab1({ setValue, setTab1State, setactiveChatID }) {
       });
       console.log(chatDetail?.data?.message, "chatDetail");
       setactiveChatID(chatDetail?.data?.data?._id);
-      setTab1State(true);
+      setTab2State(true);
       setValue(1);
     } catch (error) {
       console.error(error);
