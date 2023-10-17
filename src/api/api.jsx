@@ -55,7 +55,7 @@ axiosApiInstance.interceptors.response.use(
   async (error) => {
     let originalRequest = error.config;
 
-    if (error?.response?.status === 406 && !originalRequest?._retry) {
+    if (error?.response?.status === 409 && !originalRequest?._retry) {
       originalRequest._retry = true;
       await refreshToken();
       // Update the authorization header with the new token
