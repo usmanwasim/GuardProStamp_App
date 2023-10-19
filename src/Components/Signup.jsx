@@ -29,6 +29,7 @@ export default function Signup() {
   const [confirm, setConfirm] = useState(false);
   const [password, setPassword] = useState(false);
   const [data, setData] = useState({
+    asPlanChecker: true,
     city: "",
     state: "",
     agancy: "",
