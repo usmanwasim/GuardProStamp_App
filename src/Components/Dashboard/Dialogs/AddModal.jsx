@@ -12,7 +12,6 @@ export default function EditModal({ open, setOpen }) {
       keepMounted
       onClose={() => setOpen(false)}
       aria-describedby="alert-dialog-slide-description"
-      minWidth="lg"
     >
       <Box sx={{ p: { xs: 2, sm: 3.5, md: 5 } }}>
         <Box

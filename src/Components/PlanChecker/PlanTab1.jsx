@@ -43,10 +43,11 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
       return toast.error("License number is required");
     }
     try {
-      let license = await axiosApiInstance.post(`licenses/planchecker`, {
-        licenseNumber: data.license,
-      });
-      setLicenseDetail(license?.data?.data);
+      let licenseRecords = await axiosApiInstance.get(
+        `projects/planchecker/${data.license}`
+      );
+      console.log(licenseRecords, "license");
+      setLicenseDetail(licenseRecords?.data?.data);
       setData({
         city: "",
         state: "",
@@ -56,6 +57,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
       setState(!state);
     } catch (error) {
       console.error(error);
+      toast.error(error?.response?.data?.message);
     }
   };
   const createChat = async () => {
