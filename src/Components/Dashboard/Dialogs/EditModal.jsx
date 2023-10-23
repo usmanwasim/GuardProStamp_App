@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   Dialog,
-  InputAdornment,
+  // InputAdornment,
   InputBase,
   MenuItem,
   Select,
@@ -11,12 +11,35 @@ import {
   Stack,
 } from "@mui/material";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import axiosApiInstance from "../../../api/api";
+import { toast } from "react-toastify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function EditModal({ open, setOpen }) {
-  const [selectedOption, setSelectedOption] = useState("Approve");
+export default function EditModal({ open, setOpen, data, setData }) {
+  const [status, setStatus] = useState("");
+  const handleChangeStatus = async () => {
+    try {
+      let response = await axiosApiInstance.post(
+        `${import.meta.env.VITE_BASE_URL}users/userStatus`,
+        {
+          id: data?._id,
+          status: status,
+        }
+      );
+      if (response?.data?.status === "success") {
+        toast.success(response?.data?.message);
+        setOpen(false);
+        setData({});
+        return;
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log(error?.response?.data?.message, "response");
+    }
+  };
 
   const options = ["Approve", "Pending for more clarification", "Deny"];
   return (
@@ -69,6 +92,8 @@ export default function EditModal({ open, setOpen }) {
               Name:
             </Box>
             <InputBase
+              value={data?.name}
+              readOnly
               sx={{
                 borderRadius: "12px",
                 border: "1px solid #4CECB2",
@@ -98,6 +123,8 @@ export default function EditModal({ open, setOpen }) {
               Email:
             </Box>
             <InputBase
+              value={data?.email}
+              readOnly
               sx={{
                 borderRadius: "12px",
                 border: "1px solid #4CECB2",
@@ -107,7 +134,7 @@ export default function EditModal({ open, setOpen }) {
               }}
             />
           </Stack>
-          <Stack
+          {/* <Stack
             direction="row"
             gap={5}
             alignItems={"center"}
@@ -135,7 +162,7 @@ export default function EditModal({ open, setOpen }) {
                 minWidth: { xs: "200px", sm: "250px" },
               }}
             />
-          </Stack>
+          </Stack> */}
           <Stack
             direction="row"
             gap={5}
@@ -156,8 +183,8 @@ export default function EditModal({ open, setOpen }) {
               Status:
             </Box>
             <Select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
               sx={{
                 borderRadius: "12px",
                 border: "1px solid #4CECB2",
@@ -168,7 +195,11 @@ export default function EditModal({ open, setOpen }) {
                 fontSize: { xs: "12px", sm: "14px", md: "16px" },
               }}
               input={<InputBase />}
+              displayEmpty
             >
+              <MenuItem value={""} disabled>
+                Waiting for approval
+              </MenuItem>
               {options.map((option, i) => (
                 <MenuItem key={i} value={option}>
                   {option}
@@ -186,7 +217,7 @@ export default function EditModal({ open, setOpen }) {
               fontStyle: "normal",
               fontWeight: "700",
               lineHeight: "normal",
-              p: "8px 10px",
+              p: "10px 10px",
               fontSize: { xs: "13px", sm: "15px", md: "18px" },
               width: "100%",
               textTransform: "capitalize",
@@ -197,7 +228,7 @@ export default function EditModal({ open, setOpen }) {
               },
             }}
             onClick={() => {
-              console.log("clicked by save");
+              handleChangeStatus();
             }}
           >
             Save
@@ -207,3 +238,10 @@ export default function EditModal({ open, setOpen }) {
     </Box>
   );
 }
+
+EditModal.prototype = {
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
+  data: PropTypes.object,
+  setData: PropTypes.func,
+};

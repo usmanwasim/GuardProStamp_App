@@ -8,7 +8,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { ArrowBackRounded, Send, Verified } from "@mui/icons-material";
 import City from "../../assets/Images/City.png";
@@ -19,6 +19,7 @@ import Layers from "../../assets/Images/Layers.png";
 import LocationImg from "../../assets/Images/Location.png";
 import { toast } from "react-toastify";
 import axiosApiInstance from "../../api/api";
+import axios from "axios";
 
 PlanTab1.propTypes = {
   setValue: PropTypes.func,
@@ -26,10 +27,15 @@ PlanTab1.propTypes = {
   setactiveChatID: PropTypes.func,
 };
 
-const options = ["Option 1", "Option 2", "Option 3"];
 export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   const [state, setState] = useState(false);
   const [licenseDetail, setLicenseDetail] = useState({});
+  const [projectsOfLicense, setProjectsOfLicense] = useState();
+  // Select states
+  const [states, setStates] = useState([]);
+  const [citys, setCitys] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [cityIndex, setCityIndex] = useState("");
   const [data, setData] = useState({
     city: "",
     state: "",
@@ -37,32 +43,110 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
     license: "",
   });
 
+  // get states
+  useEffect(() => {
+    const getStatesForPlanChecker = async () => {
+      let response = await axios.get(`${import.meta.env.VITE_BASE_URL}states`);
+      setStates(response?.data?.data);
+    };
+    getStatesForPlanChecker();
+  }, []);
+  // get boards
+  useEffect(() => {
+    const getcirtyForPlanChecker = async () => {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}boards?state=${data.state}`
+      );
+      setCitys(response?.data?.data);
+    };
+    getcirtyForPlanChecker();
+  }, [data?.state]);
+  // get categories
+  useEffect(() => {
+    const getcirtyForPlanChecker = async () => {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}categories?state=${
+          data.state
+        }&boardIndex=${cityIndex}`
+      );
+      setCategories(response?.data?.data);
+    };
+    getcirtyForPlanChecker();
+  }, [data?.city]);
+
   // get licenses detail for planchecker
   const getLicense = async () => {
-    if (!data.license) {
-      return toast.error("License number is required");
-    }
     try {
-      let licenseRecords = await axiosApiInstance.get(
-        `projects/planchecker/${data.license}`
-      );
-      console.log(licenseRecords, "license");
-      setLicenseDetail(licenseRecords?.data?.data);
-      setData({
-        city: "",
-        state: "",
-        category: "",
-        license: "",
-      });
-      setState(!state);
+      if (!data.license) {
+        return toast.error("License number is required");
+      } else if (!data.state) {
+        return toast.error("State is required");
+      } else if (!data.city) {
+        return toast.error("City is required");
+      } else if (!data.category) {
+        return toast.error("Category is required");
+      } else {
+        let licenseRecords = await axiosApiInstance.post(
+          `licenses/planchecker`,
+          {
+            licenseNumber: data?.license,
+            stateName: data?.state,
+            licenseBoard: data?.city,
+            licenseCategory: data?.category,
+          }
+        );
+        setLicenseDetail(licenseRecords?.data?.data);
+        setData({
+          city: "",
+          state: "",
+          category: "",
+          license: "",
+        });
+        setState(!state);
+      }
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message);
     }
   };
+  // get Projects of License
+  useEffect(() => {
+    const getProjectsOfLicense = async () => {
+      try {
+        let projectsRecords = await axiosApiInstance.get(
+          `projects/planchecker/${licenseDetail?.licenseNumber}`
+        );
+        setProjectsOfLicense(projectsRecords?.data?.data);
+      } catch (error) {
+        console.error(error);
+        toast.error(error?.response?.data?.message);
+      }
+    };
+    getProjectsOfLicense();
+  }, [licenseDetail?.licenseNumber]);
+
+  // update Project status
+  const updateProjectStatus = async (id) => {
+    try {
+      let response = await axiosApiInstance.post(
+        `${import.meta.env.VITE_BASE_URL}projects/update`,
+        {
+          id: id,
+          status: true,
+        }
+      );
+      if (response?.data?.status === "success") {
+        toast.success(response?.data?.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
   const createChat = async () => {
     if (!licenseDetail?.userId) {
-      return toast.error("License number is required");
+      return toast.error("License owner is required");
     }
 
     try {
@@ -104,12 +188,17 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
               }}
             />
             <Avatar
+              src={
+                licenseDetail?.uploadLicensePhoto
+                  ? licenseDetail?.uploadLicensePhoto
+                  : ""
+              }
               sx={{
                 width: { xs: 35, sm: 45, md: 55 },
                 height: { xs: 35, sm: 45, md: 55 },
               }}
             />
-            <Box>
+            <Box sx={{ textAlign: "left" }}>
               <Box
                 sx={{
                   color: "#000",
@@ -121,9 +210,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                   lineHeight: "30px",
                 }}
               >
-                {licenseDetail?.fullName
-                  ? licenseDetail?.fullName
-                  : "John Wales"}
+                {licenseDetail?.fullName ? licenseDetail?.fullName : "Name"}
               </Box>
               <Box
                 sx={{
@@ -136,7 +223,9 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                   lineHeight: "30px",
                 }}
               >
-                Active Engineer
+                {licenseDetail?.licenseCategory
+                  ? licenseDetail?.licenseCategory
+                  : "Category"}
               </Box>
             </Box>
             <Button
@@ -169,7 +258,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
             gap={{ xs: 2, sm: 3.5, md: 5 }}
             sx={{ my: { xs: 2, sm: 3, md: 4 } }}
           >
-            {[1, 2, 3].map((item, i) => (
+            {projectsOfLicense?.map((item, i) => (
               <Box
                 key={i}
                 sx={{
@@ -198,7 +287,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                       lineHeight: "normal",
                     }}
                   >
-                    Owner: Roman Jade
+                    Owner: {item?.projectOwnerName}
                   </Box>
                   <Box
                     sx={{
@@ -211,7 +300,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                       lineHeight: "normal",
                     }}
                   >
-                    Date: 12-02-2023
+                    Date: {item?.projectDate}
                   </Box>
                 </Box>
                 {/* project Detail */}
@@ -242,7 +331,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                         alt=""
                         style={{ width: "20px", margin: "0px 5px 0px 0px" }}
                       />
-                      BLOFD work
+                      {item?.projectName ? item?.projectName : "Project Name"}
                     </Box>
                     <Box
                       sx={{
@@ -261,7 +350,10 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                         alt=""
                         style={{ width: "18px", margin: "0px 5px 0px 0px" }}
                       />
-                      36 college, Ajk, Texas, USA
+                      {item?.projectCityName ? item?.projectCityName : "City"},
+                      {item?.projectStateName
+                        ? item?.projectStateName
+                        : "State"}
                     </Box>
                   </Box>
                   <Box
@@ -292,39 +384,45 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                           color: "#00B26A",
                         },
                       }}
+                      disabled={item?.status === true ? true : false}
+                      onClick={() => {
+                        updateProjectStatus(item?._id);
+                      }}
                     >
-                      Confirm
+                      {item?.status === true ? "Confirmed" : "Confirm"}
                     </Button>
                   </Box>
                 </Stack>
                 {/* verify button */}
-                <Box
-                  sx={{
-                    px: { xs: 2, sm: 3.5, md: 5 },
-                    py: { xs: 1, sm: 2 },
-                  }}
-                >
+                {item?.status === true && (
                   <Box
                     sx={{
-                      borderRadius: "8.538px",
-                      background: "#3790FF",
-                      color: "#FFF",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: { xs: 0.4, sm: 0.7 },
-                      fontFamily: "Poppins",
-                      fontSize: { xs: "12px", sm: "15px" },
-                      fontStyle: "normal",
-                      fontWeight: "600",
-                      lineHeight: "normal",
+                      px: { xs: 2, sm: 3.5, md: 5 },
                       py: { xs: 1, sm: 2 },
                     }}
                   >
-                    <Verified sx={{ fontSize: { xs: "12px", sm: "15px" } }} />
-                    Verified
+                    <Box
+                      sx={{
+                        borderRadius: "8.538px",
+                        background: "#3790FF",
+                        color: "#FFF",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: { xs: 0.4, sm: 0.7 },
+                        fontFamily: "Poppins",
+                        fontSize: { xs: "12px", sm: "15px" },
+                        fontStyle: "normal",
+                        fontWeight: "600",
+                        lineHeight: "normal",
+                        py: { xs: 1, sm: 2 },
+                      }}
+                    >
+                      <Verified sx={{ fontSize: { xs: "12px", sm: "15px" } }} />
+                      Verified
+                    </Box>
                   </Box>
-                </Box>
+                )}
               </Box>
             ))}
           </Stack>
@@ -408,9 +506,9 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                 <MenuItem value="" disabled>
                   Select State
                 </MenuItem>
-                {options.map((option, i) => (
-                  <MenuItem key={i} value={option}>
-                    {option}
+                {states.map((item, i) => (
+                  <MenuItem key={i} value={item?.state}>
+                    {item?.state}
                   </MenuItem>
                 ))}
               </Select>
@@ -451,8 +549,12 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                 <MenuItem value="" disabled>
                   Select City
                 </MenuItem>
-                {options.map((option, i) => (
-                  <MenuItem key={i} value={option}>
+                {citys?.map((option, i) => (
+                  <MenuItem
+                    key={i}
+                    value={option}
+                    onClick={() => setCityIndex(i)}
+                  >
                     {option}
                   </MenuItem>
                 ))}
@@ -502,7 +604,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                 <MenuItem value="" disabled>
                   License Category
                 </MenuItem>
-                {options.map((option, i) => (
+                {categories?.map((option, i) => (
                   <MenuItem key={i} value={option}>
                     {option}
                   </MenuItem>

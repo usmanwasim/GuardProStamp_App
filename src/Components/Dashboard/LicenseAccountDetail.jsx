@@ -11,8 +11,19 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-export default function LicenseAccountDetail({ setAdd, setEdit, setDel }) {
+export default function LicenseAccountDetail({
+  data,
+  // setAdd,
+  setEdit,
+  setDel,
+  setDelData,
+  setEditData,
+}) {
+  const Navigate = useNavigate();
+
   return (
     <Box>
       <Box
@@ -67,7 +78,7 @@ export default function LicenseAccountDetail({ setAdd, setEdit, setDel }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((row, i) => (
+              {data.map((item, i) => (
                 <TableRow
                   key={i}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -85,16 +96,14 @@ export default function LicenseAccountDetail({ setAdd, setEdit, setDel }) {
                           },
                         }}
                       />
-                      Lorem Ipsum
+                      {item?.name}
                     </Stack>
                   </TableCell>
-                  <TableCell align="left">Email@gmail.com</TableCell>
+                  <TableCell align="left">{item?.email}</TableCell>
                   <TableCell align="left" sx={{ textDecoration: "underline" }}>
                     File Name
                   </TableCell>
-                  <TableCell align="left">
-                    {i % 2 === 0 ? "Waiting for approval" : "Enrolled"}{" "}
-                  </TableCell>
+                  <TableCell align="left">{item?.status}</TableCell>
                   <TableCell align="left">
                     <Stack direction="row" gap={1}>
                       <Button
@@ -108,7 +117,10 @@ export default function LicenseAccountDetail({ setAdd, setEdit, setDel }) {
                             color: "#4CECB2",
                           },
                         }}
-                        onClick={() => setEdit(true)}
+                        onClick={() => {
+                          setEditData(item);
+                          setEdit(true);
+                        }}
                       >
                         Edit
                       </Button>
@@ -123,7 +135,10 @@ export default function LicenseAccountDetail({ setAdd, setEdit, setDel }) {
                             color: "#3821A5",
                           },
                         }}
-                        onClick={() => setDel(true)}
+                        onClick={() => {
+                          setDelData(item);
+                          setDel(true);
+                        }}
                       >
                         Delete
                       </Button>
@@ -152,10 +167,22 @@ export default function LicenseAccountDetail({ setAdd, setEdit, setDel }) {
             color: "#3821A5",
           },
         }}
-        onClick={() => setAdd(true)}
+        onClick={() => {
+          // setAdd(true);
+          Navigate("/signup");
+        }}
       >
         Add
       </Button>
     </Box>
   );
 }
+
+LicenseAccountDetail.propTypes = {
+  data: PropTypes.array,
+  setAdd: PropTypes.func,
+  setEdit: PropTypes.func,
+  setDel: PropTypes.func,
+  setDelData: PropTypes.func,
+  setEditData: PropTypes.func,
+};

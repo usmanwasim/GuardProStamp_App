@@ -44,6 +44,10 @@ export default function Desktop2() {
               fontWeight: "600",
               lineHeight: "normal",
               textTransform: "Capitalize",
+              "&:hover": {
+                color: "#fff",
+                border: "1px solid #fff",
+              },
             }}
             onClick={() => {
               navigate("/dashboard");

@@ -51,7 +51,6 @@ export default function PlanTab2({
   let jwtToken = sessionStorage.getItem("jwt-token");
   useEffect(() => {
     if (jwtToken && userData?.id) {
-      console.log(userData?.id, "user join must be run", jwtToken);
       Socket.on("connect", () => {
         console.log("socket connected", Socket.id, userData);
       });
@@ -111,7 +110,7 @@ export default function PlanTab2({
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    console.log(ActiveChatDetail);
+    // console.log(ActiveChatDetail);
   }, [ActiveChatDetail?.messages, Msg]);
   return (
     <>
@@ -437,6 +436,11 @@ export default function PlanTab2({
                         <InputBase
                           value={Msg}
                           onChange={(e) => setMsg(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleSendMsg();
+                            }
+                          }}
                           placeholder="Type your message here..."
                           multiline={true}
                           minRows={2}

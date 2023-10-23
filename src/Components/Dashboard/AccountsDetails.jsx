@@ -1,12 +1,13 @@
 import { Search } from "@mui/icons-material";
 import { Box, InputBase, Stack, Tab, Tabs } from "@mui/material";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlanCheckerDetail from "./PlanCheckerDetail";
 import LicenseAccountDetail from "./LicenseAccountDetail";
 import DeleteModal from "./Dialogs/DeleteModal";
 import EditModal from "./Dialogs/EditModal";
 import AddModal from "./Dialogs/AddModal";
+import axiosApiInstance from "../../api/api";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,19 +39,56 @@ function a11yProps(index) {
 }
 
 export default function AccountsDetails() {
+  const [planCheckerdata, setPlanCheckerdata] = useState([]);
+  const [licenseAccountData, setLicenseAccountData] = useState([]);
   const [Del, setDel] = useState(false);
+  const [delData, setDelData] = useState({});
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [editData, setEditData] = useState({});
   const [search, setSearch] = useState("");
   // Tabs state
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const getPlanChecker = async () => {
+    let response = await axiosApiInstance.get(
+      `${import.meta.env.VITE_BASE_URL}users/dashboard?asPlanChecker=${true}`
+    );
+    setPlanCheckerdata(response?.data?.data);
+  };
+  const getLicenseAccount = async () => {
+    let response = await axiosApiInstance.get(
+      `${import.meta.env.VITE_BASE_URL}users/dashboard?asPlanChecker=${false}`
+    );
+    setLicenseAccountData(response?.data?.data);
+  };
+  useEffect(() => {
+    getPlanChecker();
+    getLicenseAccount();
+  }, []);
+
+  useEffect(() => {
+    getPlanChecker();
+    getLicenseAccount();
+  }, [delData, editData]);
+
   return (
-    <Box sx={{}}>
-      <DeleteModal open={Del} setOpen={setDel} />
-      <EditModal open={edit} setOpen={setEdit} />
+    <Box>
+      <DeleteModal
+        open={Del}
+        setOpen={setDel}
+        data={delData}
+        setData={setDelData}
+      />
+      <EditModal
+        open={edit}
+        setOpen={setEdit}
+        data={editData}
+        setData={setEditData}
+      />
       <AddModal open={add} setOpen={setAdd} />
       <Box mb={{ xs: 2, sm: 3 }}>
         <Tabs
@@ -123,13 +161,23 @@ export default function AccountsDetails() {
       </Stack>
       <CustomTabPanel value={value} index={0}>
         <LicenseAccountDetail
+          data={licenseAccountData}
           setAdd={setAdd}
           setEdit={setEdit}
           setDel={setDel}
+          setDelData={setDelData}
+          setEditData={setEditData}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <PlanCheckerDetail setAdd={setAdd} setEdit={setEdit} setDel={setDel} />
+        <PlanCheckerDetail
+          data={planCheckerdata}
+          setAdd={setAdd}
+          setEdit={setEdit}
+          setDel={setDel}
+          setDelData={setDelData}
+          setEditData={setEditData}
+        />
       </CustomTabPanel>
     </Box>
   );

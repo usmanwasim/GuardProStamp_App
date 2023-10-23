@@ -1,12 +1,31 @@
 import { Close } from "@mui/icons-material";
 import { Box, Button, Dialog, Slide, Stack } from "@mui/material";
 import React from "react";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import axiosApiInstance from "../../../api/api";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DeleteModal({ open, setOpen }) {
+export default function DeleteModal({ open, setOpen, data, setData }) {
+  const handleDelete = async () => {
+    try {
+      let response = await axiosApiInstance.get(
+        `${import.meta.env.VITE_BASE_URL}users/userDelete?id=${data?._id}`
+      );
+      if (response?.data?.status === "success") {
+        toast.success(response?.data?.message);
+        setOpen(false);
+        setData();
+        return;
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log(error?.response?.data?.message, "response");
+    }
+  };
   return (
     <Box position={"relative"}>
       <Dialog
@@ -62,6 +81,9 @@ export default function DeleteModal({ open, setOpen }) {
                   color: "#ADA7A7",
                 },
               }}
+              onClick={() => {
+                handleDelete();
+              }}
             >
               Yes
             </Button>
@@ -77,6 +99,9 @@ export default function DeleteModal({ open, setOpen }) {
                   color: "#4CECB2",
                 },
               }}
+              onClick={() => {
+                setOpen(false);
+              }}
             >
               {" "}
               No
@@ -87,3 +112,10 @@ export default function DeleteModal({ open, setOpen }) {
     </Box>
   );
 }
+
+DeleteModal.prototype = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+  data: PropTypes.object,
+  setData: PropTypes.func,
+};

@@ -18,21 +18,24 @@ import Letter from "../assets/Images/Letter.png";
 import Lock from "../assets/Images/Lock.png";
 import eye from "../assets/Images/eye.png";
 import closeeye from "../assets/Images/close-eye.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleRegister } from "../api/api";
 import { toast } from "react-toastify";
+import axios from "axios";
 
-const options = ["Option 1", "Option 2", "Option 3"];
+// const options = ["Option 1", "Option 2", "Option 3"];
 export default function Signup() {
   const navigate = useNavigate();
+  const [states, setStates] = useState([]);
+  const [citys, setCitys] = useState([]);
   const [confirm, setConfirm] = useState(false);
   const [password, setPassword] = useState(false);
   const [data, setData] = useState({
     asPlanChecker: true,
     city: "",
     state: "",
-    agancy: "",
+    agency: "",
     department: "",
     name: "",
     email: "",
@@ -40,12 +43,28 @@ export default function Signup() {
     cpassword: "",
   });
 
+  useEffect(() => {
+    const getStatesCity = async () => {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}statesAndCities`
+      );
+      setStates(response?.data?.data);
+    };
+    getStatesCity();
+  }, []);
+  useEffect(() => {
+    let citydata = states.filter(
+      (state) => state.stateName === data.state && state.stateCity
+    );
+    setCitys(citydata[0]?.stateCity);
+  }, [data.state]);
+
   const handleSignup = async () => {
     if (!data?.state) {
       toast.error("Please select State");
     } else if (!data?.city) {
       toast.error("Please select City");
-    } else if (!data?.agancy) {
+    } else if (!data?.agency) {
       toast.error("Please select Agency");
     } else if (!data?.department) {
       toast.error("Please select Department");
@@ -153,9 +172,9 @@ export default function Signup() {
                   <MenuItem value="" disabled>
                     Enter your state
                   </MenuItem>
-                  {options.map((option, i) => (
-                    <MenuItem key={i} value={option}>
-                      {option}
+                  {states.map((item, i) => (
+                    <MenuItem key={i} value={item.stateName}>
+                      {item.stateName}
                     </MenuItem>
                   ))}
                 </Select>
@@ -196,14 +215,15 @@ export default function Signup() {
                   <MenuItem value="" disabled>
                     Enter your city
                   </MenuItem>
-                  {options.map((option, i) => (
+                  {citys?.map((option, i) => (
                     <MenuItem key={i} value={option}>
                       {option}
                     </MenuItem>
                   ))}
                 </Select>
               </Stack>
-              <Stack
+              {/* agency & departments  selects*/}
+              {/* <Stack
                 direction={{ xs: "column", sm: "row" }}
                 justifyContent="center"
                 alignItems="center"
@@ -211,8 +231,8 @@ export default function Signup() {
                 my={{ xs: 2, sm: 3, md: 4 }}
               >
                 <Select
-                  value={data.agancy}
-                  onChange={(e) => setData({ ...data, agancy: e.target.value })}
+                  value={data.agency}
+                  onChange={(e) => setData({ ...data, agency: e.target.value })}
                   sx={{
                     width: "100%",
                     borderRadius: "15px",
@@ -245,7 +265,7 @@ export default function Signup() {
                   }
                 >
                   <MenuItem value="" disabled>
-                    Enter your agancy
+                    Enter your agency
                   </MenuItem>
                   {options.map((option, i) => (
                     <MenuItem key={i} value={option}>
@@ -298,6 +318,61 @@ export default function Signup() {
                     </MenuItem>
                   ))}
                 </Select>
+              </Stack> */}
+              {/* agency & departments inputs */}
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                justifyContent="center"
+                alignItems="center"
+                gap={{ xs: 2, sm: 3, md: 4 }}
+                my={{ xs: 2, sm: 3, md: 4 }}
+              >
+                <InputBase
+                  placeholder="Enter your agency"
+                  value={data.agency}
+                  onChange={(e) => setData({ ...data, agency: e.target.value })}
+                  sx={{
+                    width: "100%",
+                    borderRadius: "15px",
+                    border: "1px solid #E6E6E6",
+                    background: "#FFF",
+                    p: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  }}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Box
+                        component={"img"}
+                        src={City1}
+                        width={{ xs: "17px", sm: "22px" }}
+                      />
+                    </InputAdornment>
+                  }
+                />
+                <InputBase
+                  placeholder="Enter your department"
+                  value={data.department}
+                  onChange={(e) =>
+                    setData({ ...data, department: e.target.value })
+                  }
+                  sx={{
+                    width: "100%",
+                    borderRadius: "15px",
+                    border: "1px solid #E6E6E6",
+                    background: "#FFF",
+                    p: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  }}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Box
+                        component={"img"}
+                        src={Layers}
+                        width={{ xs: "17px", sm: "22px" }}
+                      />
+                    </InputAdornment>
+                  }
+                />
               </Stack>
               {/* user name email password */}
               <Stack

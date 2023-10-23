@@ -11,8 +11,18 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-export default function PlanCheckerDetail({ setAdd, setEdit, setDel }) {
+export default function PlanCheckerDetail({
+  data,
+  // setAdd,
+  setEdit,
+  setDel,
+  setDelData,
+  setEditData,
+}) {
+  const Navigate = useNavigate();
   return (
     <>
       <Box>
@@ -65,7 +75,7 @@ export default function PlanCheckerDetail({ setAdd, setEdit, setDel }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((row, i) => (
+              {data?.map((item, i) => (
                 <TableRow
                   key={i}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -83,18 +93,18 @@ export default function PlanCheckerDetail({ setAdd, setEdit, setDel }) {
                           },
                         }}
                       />
-                      Lorem Ipsum
+                      {item?.name}
                     </Stack>
                   </TableCell>
-                  <TableCell align="left">Email@gmail.com</TableCell>
+                  <TableCell align="left">{item?.email}</TableCell>
                   <TableCell align="left" sx={{ textDecoration: "underline" }}>
                     File Name
                   </TableCell>
-                  <TableCell align="left">Lorem Ipsum</TableCell>
-                  <TableCell align="left">Lorem </TableCell>
-                  <TableCell align="left">Lorem </TableCell>
+                  <TableCell align="left">{item?.agency}</TableCell>
+                  <TableCell align="left">{item?.state} </TableCell>
+                  <TableCell align="left">{item?.city} </TableCell>
                   <TableCell align="left">
-                    {i % 2 === 0 ? "Waiting for approval" : "Lorem"}{" "}
+                    {item?.status ? item?.status : "Pending"}
                   </TableCell>
                   <TableCell align="left">
                     <Stack direction="row" gap={1}>
@@ -109,7 +119,10 @@ export default function PlanCheckerDetail({ setAdd, setEdit, setDel }) {
                             color: "#4CECB2",
                           },
                         }}
-                        onClick={() => setEdit(true)}
+                        onClick={() => {
+                          setEditData(item);
+                          setEdit(true);
+                        }}
                       >
                         Edit
                       </Button>
@@ -124,7 +137,10 @@ export default function PlanCheckerDetail({ setAdd, setEdit, setDel }) {
                             color: "#3821A5",
                           },
                         }}
-                        onClick={() => setDel(true)}
+                        onClick={() => {
+                          setDelData(item);
+                          setDel(true);
+                        }}
                       >
                         Delete
                       </Button>
@@ -153,10 +169,22 @@ export default function PlanCheckerDetail({ setAdd, setEdit, setDel }) {
             color: "#3821A5",
           },
         }}
-        onClick={() => setAdd(true)}
+        onClick={() => {
+          // setAdd(true);
+          Navigate("/signup");
+        }}
       >
         Add
       </Button>
     </>
   );
 }
+
+PlanCheckerDetail.propTypes = {
+  data: PropTypes.array,
+  setAdd: PropTypes.func,
+  setEdit: PropTypes.func,
+  setDel: PropTypes.func,
+  setDelData: PropTypes.func,
+  setEditData: PropTypes.func,
+};
