@@ -129,7 +129,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   const updateProjectStatus = async (id) => {
     try {
       let response = await axiosApiInstance.post(
-        `${import.meta.env.VITE_BASE_URL}projects/update`,
+        `${import.meta.env.VITE_BASE_URL}projects/adminUpdate`,
         {
           id: id,
           status: true,
