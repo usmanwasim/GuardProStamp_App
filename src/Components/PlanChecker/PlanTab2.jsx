@@ -52,7 +52,7 @@ export default function PlanTab2({
   useEffect(() => {
     if (jwtToken && userData?.id) {
       Socket.on("connect", () => {
-        console.log("socket connected", Socket.id, userData);
+        console.log("socket connected", Socket.id);
       });
       Socket.emit("join", userData?.id);
     }
@@ -62,6 +62,7 @@ export default function PlanTab2({
   useEffect(() => {
     Socket.emit("id-for-chat-list", userData?.id);
     Socket.on("all-chats", (data) => {
+      // console.log(data, "chat list");
       setChatList(data);
     });
   }, [!chatList]);
@@ -185,7 +186,7 @@ export default function PlanTab2({
                       }}
                     >
                       {/* all chat for that user or plan checker */}
-                      {chatList.length > 0 &&
+                      {chatList.length > 0 ? (
                         chatList.map((item, i) => (
                           <Box
                             key={i}
@@ -203,8 +204,8 @@ export default function PlanTab2({
                             <Box
                               sx={{
                                 px: { xs: 1, sm: 1.5 },
-                                mb: { xs: 1, sm: 1.5 },
-                                mt: { xs: -1, sm: -1.5 },
+                                my: { xs: 1, sm: 1.5 },
+                                // mt: { xs: -1, sm: -1.5 },
                               }}
                             >
                               <Box
@@ -221,9 +222,16 @@ export default function PlanTab2({
                                 }}
                               >
                                 <Avatar
-                                  src={i % 2 === 0 ? avatar2 : avatar1}
-                                  sx={{ width: "25px", height: "25px" }}
-                                />
+                                  // src={i % 2 === 0 ? avatar2 : avatar1}
+                                  sx={{
+                                    width: "25px",
+                                    height: "25px",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  {item?.members[0]?.name.split(" ")[0]?.[0]}
+                                  {item?.members[0]?.name.split(" ")[1]?.[0]}
+                                </Avatar>
                                 <Box
                                   sx={{
                                     borderRadius: "5px",
@@ -236,7 +244,7 @@ export default function PlanTab2({
                                   {item?.members[0]?.name}
                                 </Box>
                               </Box>
-                              <Box
+                              {/* <Box
                                 sx={{
                                   color: "#000",
                                   fontFamily: "Poppins",
@@ -249,10 +257,22 @@ export default function PlanTab2({
                               >
                                 {`${item?.members[0]?.email}
                                 ${item?.members[0]?.userId}`}
-                              </Box>
+                              </Box> */}
                             </Box>
                           </Box>
-                        ))}
+                        ))
+                      ) : (
+                        <Box
+                          sx={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          Chat List is Empty
+                        </Box>
+                      )}
                     </Stack>
                   </Grid>
                   <Grid item xs={12} sm={12} md={8}>
@@ -284,7 +304,7 @@ export default function PlanTab2({
                           }}
                         >
                           <Avatar
-                            src={avatar1}
+                            src={ActiveChatDetail?.receiver?.name && avatar1}
                             sx={{ width: "25px", height: "25px" }}
                           />
                           <Box
@@ -296,7 +316,9 @@ export default function PlanTab2({
                               fontSize: "12px",
                             }}
                           >
-                            {ActiveChatDetail?.receiver?.name}
+                            {ActiveChatDetail?.receiver
+                              ? ActiveChatDetail?.receiver?.name
+                              : "Name Here"}
                           </Box>
                         </Box>
                       </Box>
@@ -357,7 +379,12 @@ export default function PlanTab2({
                                 }}
                               >
                                 <Avatar
-                                  src={avatar1}
+                                  src={
+                                    item?.sender ===
+                                    ActiveChatDetail?.receiver?.userId
+                                      ? avatar1
+                                      : avatar2
+                                  }
                                   sx={{ width: "30px", height: "30px" }}
                                 />
                                 <Box
