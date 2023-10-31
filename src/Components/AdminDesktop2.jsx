@@ -50,7 +50,7 @@ export default function Desktop2() {
               },
             }}
             onClick={() => {
-              navigate("/dashboard");
+              navigate("/loginpage");
             }}
           >
             Admin

@@ -56,7 +56,10 @@ export default function Signup() {
     let citydata = states.filter(
       (state) => state.stateName === data.state && state.stateCity
     );
-    setCitys(citydata[0]?.stateCity);
+    let cityData = citydata[0]?.stateCity;
+    // Sort the professionalType array alphabetically
+    cityData?.sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+    setCitys(cityData);
   }, [data.state]);
 
   const handleSignup = async () => {

@@ -49,7 +49,7 @@ export default function Desktop2() {
                 border: "1px solid #fff",
               },
             }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/loginpage")}
           >
             Plan Checker
           </Button>

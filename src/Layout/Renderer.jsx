@@ -10,6 +10,8 @@ import Dashboard from "../Components/Dashboard/Dashboard";
 import AccountsDetails from "../Components/Dashboard/AccountsDetails";
 import PlanChecker from "../Components/PlanChecker/Index";
 import { Container } from "@mui/material";
+import PersistLogin from "./PersistLogin";
+import ForgotPassword from "../Components/ForgotPassword";
 
 export default function Renderer() {
   const location = useLocation();
@@ -24,15 +26,18 @@ export default function Renderer() {
         <Header />
       )}
       <Routes>
-        <Route exact path="/" element={<PlanChecker />} />
+        <Route exact path="/" element={<Desktop2 />} />
+        <Route exact path="/adminpage" element={<AdminDesktop2 />} />
         <Route exact path="/loginpage" element={<Desktop1 />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/userpage" element={<Desktop2 />} />
-        <Route exact path="/Adminpage" element={<AdminDesktop2 />} />
-        {/* <Route exact path="/AdminDesktop1" element={<AdminDesktop1 />} /> */}
-        <Route exact path="/dashboard" element={<Dashboard />}>
-          <Route exact path="" element={<AccountsDetails />} />
+        <Route exact path="/forgetpassword" element={<ForgotPassword />} />
+
+        <Route element={<PersistLogin />}>
+          <Route exact path="/planchecker" element={<PlanChecker />} />
+          <Route exact path="/dashboard" element={<Dashboard />}>
+            <Route exact path="" element={<AccountsDetails />} />
+          </Route>
         </Route>
       </Routes>
     </>

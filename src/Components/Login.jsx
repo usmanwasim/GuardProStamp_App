@@ -42,9 +42,9 @@ export default function Login() {
           );
           toast.success(response?.data?.message);
           if (response?.data?.data?.role === "admin") {
-            navigate("/adminpage");
+            navigate("/dashboard");
           } else {
-            navigate("/userpage");
+            navigate("/planchecker");
           }
         } else {
           toast.error(response?.data?.message);
@@ -203,8 +203,9 @@ export default function Login() {
                     fontStyle: "normal",
                     fontWeight: "500",
                     lineHeight: "normal",
+                    cursor: "pointer",
                   }}
-                  // onClick={() => handleForgot()}
+                  onClick={() => navigate("/forgetpassword")}
                 >
                   Forget Password
                 </Box>
