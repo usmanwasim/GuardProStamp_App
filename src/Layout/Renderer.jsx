@@ -18,7 +18,8 @@ export default function Renderer() {
   let userJwtToken = sessionStorage.getItem("jwt-token");
   return (
     <>
-      {location.pathname !== "/dashboard" && userJwtToken ? (
+      {["/planchecker", "/dashboard"].includes(location.pathname) &&
+      userJwtToken ? (
         <Container>
           <HeaderAuthorize />
         </Container>

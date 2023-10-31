@@ -5,11 +5,13 @@ import {
   Drawer,
   Hidden,
   IconButton,
+  Popover,
   Stack,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { PersonRounded, MenuOutlined } from "@mui/icons-material";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import LOGO from "../assets/Images/Logo.png";
 
@@ -17,6 +19,26 @@ const data = ["Home", "About", "Features", "Benefits", "Press Media", "FAQs"];
 
 export default function Header() {
   const [state, setState] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const togglePage = () => {
+    if (location.pathname === "/") {
+      navigate("/adminpage");
+    } else if (location.pathname === "/adminpage") {
+      navigate("/");
+    }
+  };
 
   const list = () => (
     <Box py={{ xs: 2, sm: 3, md: 4 }}>
@@ -129,11 +151,43 @@ export default function Header() {
               </Button>
 
               <PersonRounded
+                aria-owns={open ? "mouse-over-popover" : undefined}
+                aria-haspopup="true"
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
                 sx={{
                   color: "#3821A5",
                   cursor: "pointer",
                 }}
+                onClick={() => {
+                  togglePage();
+                }}
               />
+              {["/", "/adminpage"].includes(location.pathname) && (
+                <Popover
+                  id="mouse-over-popover"
+                  sx={{
+                    pointerEvents: "none",
+                  }}
+                  open={open}
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "center",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "center",
+                    horizontal: "right",
+                  }}
+                  onClose={handlePopoverClose}
+                  disableRestoreFocus
+                >
+                  <Typography sx={{ p: "2px 5px" }}>
+                    {(location.pathname === "/" && "Admin") ||
+                      (location.pathname === "/adminpage" && "Plan Checker")}
+                  </Typography>
+                </Popover>
+              )}
             </Stack>
           </Hidden>
           <Hidden mdUp>
