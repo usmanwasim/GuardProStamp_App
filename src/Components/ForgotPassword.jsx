@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -18,12 +18,21 @@ import Lock from "../assets/Images/Lock.png";
 export default function ForgotPassword() {
   const navigate = useNavigate();
   const [state, setState] = useState(false);
+  const [colorConfirm, setColorConfirm] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
     code: "",
     cpassword: "",
   });
+
+  useEffect(() => {
+    if (data?.password && data?.password !== data?.cpassword) {
+      setColorConfirm(true);
+    } else {
+      setColorConfirm(false);
+    }
+  }, [data.cpassword]);
 
   const handleSubmitEmailForCode = async () => {
     if (!data?.email) {
@@ -201,7 +210,10 @@ export default function ForgotPassword() {
                       sx={{
                         width: "100%",
                         borderRadius: "15px",
-                        border: "1px solid #E6E6E6",
+                        border: colorConfirm
+                          ? "1px solid red"
+                          : "1px solid #E6E6E6",
+                        color: colorConfirm ? "red" : "#000",
                         background: "#FFF",
                         p: { xs: 1, sm: 1.5 },
                         fontSize: { xs: "12px", sm: "14px", md: "16px" },

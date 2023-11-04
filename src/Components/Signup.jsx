@@ -31,6 +31,7 @@ export default function Signup() {
   const [citys, setCitys] = useState([]);
   const [confirm, setConfirm] = useState(false);
   const [password, setPassword] = useState(false);
+  const [colorConfirm, setColorConfirm] = useState(false);
   const [data, setData] = useState({
     asPlanChecker: true,
     city: "",
@@ -61,6 +62,14 @@ export default function Signup() {
     cityData?.sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
     setCitys(cityData);
   }, [data.state]);
+
+  useEffect(() => {
+    if (data?.password && data?.password !== data?.cpassword) {
+      setColorConfirm(true);
+    } else {
+      setColorConfirm(false);
+    }
+  }, [data.cpassword]);
 
   const handleSignup = async () => {
     if (!data?.state) {
@@ -487,10 +496,13 @@ export default function Signup() {
                   sx={{
                     width: "100%",
                     borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
+                    border: colorConfirm
+                      ? "1px solid red"
+                      : "1px solid #E6E6E6",
                     background: "#FFF",
                     p: { xs: 1, sm: 1.5 },
                     fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    color: colorConfirm ? "red" : "black",
                   }}
                   startAdornment={
                     <InputAdornment position="start">
