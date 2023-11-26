@@ -5,6 +5,7 @@ import {
   Container,
   InputAdornment,
   InputBase,
+  InputLabel,
   Stack,
 } from "@mui/material";
 import { ArrowBackRounded } from "@mui/icons-material";
@@ -14,7 +15,7 @@ import eye from "../assets/Images/eye.png";
 import closeeye from "../assets/Images/close-eye.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { loginHandle } from "../api/api";
 
 export default function Login() {
@@ -23,16 +24,39 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [dataErrors, setDataErrors] = useState({ email: "", password: "" });
+  const [responseMsg, setResponseMsg] = useState({
+    status: null,
+    message: "",
+  });
   const [password, setPassword] = useState(false);
   const handleLogin = async () => {
     if (!data?.email) {
-      toast.error("Please enter Email");
+      // toast.error("Please enter Email");
+      setDataErrors({
+        ...dataErrors,
+        email: "Please enter Email",
+      });
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data?.email)) {
-      toast.error("Invalid Email Format");
+      // toast.error("Invalid Email Format");
+      setDataErrors({
+        ...dataErrors,
+        email: "Invalid Email Format",
+      });
     } else if (!data?.password) {
-      toast.error("Please enter Password");
+      // toast.error("Please enter Password");
+      setDataErrors({
+        ...dataErrors,
+        email: "",
+        password: "Please enter Password",
+      });
     } else {
       try {
+        setDataErrors({
+          ...dataErrors,
+          email: "",
+          password: "",
+        });
         const response = await loginHandle(data);
         if (response?.data?.status == "success") {
           sessionStorage.setItem("jwt-token", response?.data?.accessToken);
@@ -40,17 +64,29 @@ export default function Login() {
             "userData",
             JSON.stringify(response?.data?.data)
           );
-          toast.success(response?.data?.message);
+          // toast.success(response?.data?.message);
+          setResponseMsg({
+            status: true,
+            message: response?.data?.message,
+          });
           if (response?.data?.data?.role === "admin") {
             navigate("/dashboard");
           } else {
             navigate("/planchecker");
           }
         } else {
-          toast.error(response?.data?.message);
+          // toast.error(response?.data?.message);
+          setResponseMsg({
+            status: false,
+            message: response?.data?.message,
+          });
         }
       } catch (err) {
-        toast.error(err?.response?.data?.message);
+        // toast.error(err?.response?.data?.message);
+        setResponseMsg({
+          status: false,
+          message: err?.response?.data?.message,
+        });
         console.log(err);
       }
     }
@@ -95,70 +131,88 @@ export default function Login() {
                 gap={{ xs: 2, sm: 3, md: 4 }}
                 my={{ xs: 2, sm: 3, md: 4 }}
               >
-                <InputBase
-                  placeholder="Enter your email"
-                  value={data.email}
-                  onChange={(e) => {
-                    setData({ ...data, email: e.target.value });
-                  }}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={Letter}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                />
-                <InputBase
-                  placeholder="Enter your password"
-                  value={data.password}
-                  onChange={(e) => {
-                    setData({ ...data, password: e.target.value });
-                  }}
-                  type={password ? "text" : "password"}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={Lock}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={password ? eye : closeeye}
-                        sx={{
-                          cursor: "pointer",
-                        }}
-                        width={{ xs: "17px", sm: "22px" }}
-                        onClick={() => {
-                          setPassword((pre) => !pre);
-                        }}
-                      />
-                    </InputAdornment>
-                  }
-                />
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="email"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.email}
+                  </InputLabel>
+                  <InputBase
+                    id="email"
+                    placeholder="Enter your email"
+                    value={data.email}
+                    onChange={(e) => {
+                      setData({ ...data, email: e.target.value });
+                    }}
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={Letter}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="password"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.password}
+                  </InputLabel>
+                  <InputBase
+                    id="password"
+                    placeholder="Enter your password"
+                    value={data.password}
+                    onChange={(e) => {
+                      setData({ ...data, password: e.target.value });
+                    }}
+                    type={password ? "text" : "password"}
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={Lock}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={password ? eye : closeeye}
+                          sx={{
+                            cursor: "pointer",
+                          }}
+                          width={{ xs: "17px", sm: "22px" }}
+                          onClick={() => {
+                            setPassword((pre) => !pre);
+                          }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
               </Stack>
               <Stack
                 direction={{ xs: "row" }}
@@ -258,6 +312,14 @@ export default function Login() {
                   {" "}
                   Signup
                 </span>
+              </Box>
+              <Box
+                sx={{
+                  textAlign: "center",
+                  color: responseMsg?.status ? "#00B26A" : "red",
+                }}
+              >
+                {responseMsg?.message}
               </Box>
             </Container>
           </Box>

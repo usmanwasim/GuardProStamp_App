@@ -197,9 +197,9 @@ export default function EditModal({ open, setOpen, data, setData }) {
               input={<InputBase />}
               displayEmpty
             >
-              <MenuItem value={""} disabled>
+              {/* <MenuItem value={""} disabled sx={{ color: "#000" }}>
                 Waiting for approval
-              </MenuItem>
+              </MenuItem> */}
               {options.map((option, i) => (
                 <MenuItem key={i} value={option}>
                   {option}
@@ -239,9 +239,9 @@ export default function EditModal({ open, setOpen, data, setData }) {
   );
 }
 
-EditModal.prototype = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func,
-  data: PropTypes.object,
-  setData: PropTypes.func,
+EditModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  setData: PropTypes.func.isRequired,
 };

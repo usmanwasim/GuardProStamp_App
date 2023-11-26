@@ -12,17 +12,17 @@ import {
   TableRow,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function PlanCheckerDetail({
   data,
-  // setAdd,
+  setAdd,
   setEdit,
   setDel,
   setDelData,
   setEditData,
 }) {
-  const Navigate = useNavigate();
+  // const Navigate = useNavigate();
   return (
     <>
       <Box>
@@ -66,8 +66,9 @@ export default function PlanCheckerDetail({
                   </Stack>
                 </TableCell>
                 <TableCell align="left">Email</TableCell>
-                <TableCell align="left">Documents</TableCell>
+                {/* <TableCell align="left">Documents</TableCell> */}
                 <TableCell align="left">Public Agency</TableCell>
+                <TableCell align="left">Department</TableCell>
                 <TableCell align="left">State</TableCell>
                 <TableCell align="left">City</TableCell>
                 <TableCell align="left">Status</TableCell>
@@ -97,10 +98,11 @@ export default function PlanCheckerDetail({
                     </Stack>
                   </TableCell>
                   <TableCell align="left">{item?.email}</TableCell>
-                  <TableCell align="left" sx={{ textDecoration: "underline" }}>
+                  {/* <TableCell align="left" sx={{ textDecoration: "underline" }}>
                     File Name
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="left">{item?.agency}</TableCell>
+                  <TableCell align="left">{item?.department}</TableCell>
                   <TableCell align="left">{item?.state} </TableCell>
                   <TableCell align="left">{item?.city} </TableCell>
                   <TableCell align="left">
@@ -170,8 +172,8 @@ export default function PlanCheckerDetail({
           },
         }}
         onClick={() => {
-          // setAdd(true);
-          Navigate("/signup");
+          setAdd(true);
+          // Navigate("/signup");
         }}
       >
         Add

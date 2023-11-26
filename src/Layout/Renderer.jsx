@@ -12,6 +12,7 @@ import PlanChecker from "../Components/PlanChecker/Index";
 import { Container } from "@mui/material";
 import PersistLogin from "./PersistLogin";
 import ForgotPassword from "../Components/ForgotPassword";
+import Footer from "./Footer.jsx";
 
 export default function Renderer() {
   const location = useLocation();
@@ -41,6 +42,7 @@ export default function Renderer() {
           </Route>
         </Route>
       </Routes>
+      {["/", "/adminpage"].includes(location.pathname) && <Footer />}
     </>
   );
 }

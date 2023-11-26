@@ -31,15 +31,16 @@ export default function Desktop1() {
           <Button
             sx={{
               borderRadius: "15px",
-              background: "#3821A5",
-              color: "#fff",
+              color: "#3B17AD",
+              border: "1px solid #3B17AD",
+
               width: "100%",
               height: "45px",
               mt: { xs: -2, md: -3 },
               textTransform: "Capitalize",
               "&:hover": {
-                color: "#3B17AD",
-                border: "1px solid #3B17AD",
+                background: "#3821A5",
+                color: "#fff",
               },
             }}
             onClick={() => navigate("/login")}
@@ -55,6 +56,10 @@ export default function Desktop1() {
               height: "45px",
               mt: { xs: 2, md: 3 },
               textTransform: "Capitalize",
+              "&:hover": {
+                background: "#3821A5",
+                color: "#fff",
+              },
             }}
             onClick={() => navigate("/signup")}
           >

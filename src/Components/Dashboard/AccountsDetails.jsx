@@ -6,7 +6,8 @@ import PlanCheckerDetail from "./PlanCheckerDetail";
 import LicenseAccountDetail from "./LicenseAccountDetail";
 import DeleteModal from "./Dialogs/DeleteModal";
 import EditModal from "./Dialogs/EditModal";
-import AddModal from "./Dialogs/AddModal";
+import AddLicenseAccount from "./Dialogs/AddLicenseAccount";
+import AddPlancheckerAccount from "./Dialogs/AddPlancheckerAccount";
 import axiosApiInstance from "../../api/api";
 
 function CustomTabPanel(props) {
@@ -44,6 +45,7 @@ export default function AccountsDetails() {
   const [Del, setDel] = useState(false);
   const [delData, setDelData] = useState({});
   const [add, setAdd] = useState(false);
+  const [add1, setAdd1] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editData, setEditData] = useState({});
   const [search, setSearch] = useState("");
@@ -89,7 +91,8 @@ export default function AccountsDetails() {
         data={editData}
         setData={setEditData}
       />
-      <AddModal open={add} setOpen={setAdd} />
+      <AddLicenseAccount open={add} setOpen={setAdd} />
+      <AddPlancheckerAccount open={add1} setOpen={setAdd1} />
       <Box mb={{ xs: 2, sm: 3 }}>
         <Tabs
           value={value}
@@ -172,7 +175,7 @@ export default function AccountsDetails() {
       <CustomTabPanel value={value} index={1}>
         <PlanCheckerDetail
           data={planCheckerdata}
-          setAdd={setAdd}
+          setAdd={setAdd1}
           setEdit={setEdit}
           setDel={setDel}
           setDelData={setDelData}

@@ -4,6 +4,7 @@ import {
   Button,
   InputAdornment,
   InputBase,
+  InputLabel,
   MenuItem,
   Select,
   Stack,
@@ -36,6 +37,16 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   const [citys, setCitys] = useState([]);
   const [categories, setCategories] = useState([]);
   const [cityIndex, setCityIndex] = useState("");
+  const [responseMsg, setResponseMsg] = useState({
+    status: null,
+    message: "",
+  });
+  const [dataErrors, setDataErrors] = useState({
+    city: "",
+    state: "",
+    category: "",
+    license: "",
+  });
   const [data, setData] = useState({
     city: "",
     state: "",
@@ -77,15 +88,43 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   // get licenses detail for planchecker
   const getLicense = async () => {
     try {
-      if (!data.license) {
-        return toast.error("License number is required");
-      } else if (!data.state) {
-        return toast.error("State is required");
+      if (!data.state) {
+        // return toast.error("State is required");
+        setDataErrors({
+          ...dataErrors,
+          state: "State is required",
+        });
       } else if (!data.city) {
-        return toast.error("City is required");
+        // return toast.error("City is required");
+        setDataErrors({
+          ...dataErrors,
+          state: "",
+          city: "City is required",
+        });
       } else if (!data.category) {
-        return toast.error("Category is required");
+        // return toast.error("Category is required");
+        setDataErrors({
+          ...dataErrors,
+          state: "",
+          city: "",
+          category: "Category is required",
+        });
+      } else if (!data.license) {
+        // return toast.error("License number is required");
+        setDataErrors({
+          ...dataErrors,
+          state: "",
+          city: "",
+          category: "",
+          license: "License number is required",
+        });
       } else {
+        setDataErrors({
+          state: "",
+          city: "",
+          category: "",
+          license: "",
+        });
         let licenseRecords = await axiosApiInstance.post(
           `licenses/planchecker`,
           {
@@ -103,10 +142,18 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
           license: "",
         });
         setState(!state);
+        setResponseMsg({
+          status: true,
+          message: "",
+        });
       }
     } catch (error) {
       console.error(error);
-      toast.error(error?.response?.data?.message);
+      // toast.error(error?.response?.data?.message);
+      setResponseMsg({
+        status: false,
+        message: error?.response?.data?.message,
+      });
     }
   };
   // get Projects of License
@@ -467,98 +514,116 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
               gap={{ xs: 2, sm: 3, md: 4 }}
               my={{ xs: 2, sm: 3, md: 4 }}
             >
-              <Select
-                value={data.state}
-                onChange={(e) => setData({ ...data, state: e.target.value })}
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "15px",
-                  border: "1px solid #E6E6E6",
-                  background: "#FFF",
-                  color: "#1C274C",
-                  p: { xs: 1, sm: 1.5 },
-                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  "& .MuiSelect-icon": {
-                    borderRadius: "8px",
-                    border: "1px solid #1C274C",
+              <Box sx={{ width: "100%" }}>
+                <InputLabel
+                  htmlFor="state"
+                  sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                >
+                  {dataErrors.state}
+                </InputLabel>
+                <Select
+                  id="state"
+                  value={data.state}
+                  onChange={(e) => setData({ ...data, state: e.target.value })}
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "15px",
+                    border: "1px solid #E6E6E6",
+                    background: "#FFF",
                     color: "#1C274C",
-                    width: { xs: "17px", sm: "22px" },
-                    height: { xs: "17px", sm: "22px" },
-                  },
-                }}
-                displayEmpty
-                input={
-                  <InputBase
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <Box
-                          component={"img"}
-                          src={City}
-                          width={{ xs: "17px", sm: "22px" }}
-                        />
-                      </InputAdornment>
-                    }
-                  />
-                }
-              >
-                <MenuItem value="" disabled>
-                  Select State
-                </MenuItem>
-                {states.map((item, i) => (
-                  <MenuItem key={i} value={item?.state}>
-                    {item?.state}
+                    p: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    "& .MuiSelect-icon": {
+                      borderRadius: "8px",
+                      border: "1px solid #1C274C",
+                      color: "#1C274C",
+                      width: { xs: "17px", sm: "22px" },
+                      height: { xs: "17px", sm: "22px" },
+                    },
+                  }}
+                  displayEmpty
+                  input={
+                    <InputBase
+                      startAdornment={
+                        <InputAdornment position="start">
+                          <Box
+                            component={"img"}
+                            src={City}
+                            width={{ xs: "17px", sm: "22px" }}
+                          />
+                        </InputAdornment>
+                      }
+                    />
+                  }
+                >
+                  <MenuItem value="" disabled>
+                    Select State
                   </MenuItem>
-                ))}
-              </Select>
-              <Select
-                value={data.city}
-                onChange={(e) => setData({ ...data, city: e.target.value })}
-                sx={{
-                  width: "100%",
-                  borderRadius: "15px",
-                  border: "1px solid #E6E6E6",
-                  background: "#FFF",
-                  p: { xs: 1, sm: 1.5 },
-                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  color: "#1C274C",
-                  "& .MuiSelect-icon": {
-                    borderRadius: "8px",
-                    border: "1px solid #1C274C",
+                  {states.map((item, i) => (
+                    <MenuItem key={i} value={item?.state}>
+                      {item?.state}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputLabel
+                  htmlFor="city"
+                  sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                >
+                  {dataErrors.city}
+                </InputLabel>
+                <Select
+                  id="city"
+                  value={data.city}
+                  onChange={(e) => setData({ ...data, city: e.target.value })}
+                  sx={{
+                    width: "100%",
+                    borderRadius: "15px",
+                    border: "1px solid #E6E6E6",
+                    background: "#FFF",
+                    p: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
                     color: "#1C274C",
-                    width: { xs: "17px", sm: "22px" },
-                    height: { xs: "17px", sm: "22px" },
-                  },
-                }}
-                displayEmpty
-                input={
-                  <InputBase
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <Box
-                          component={"img"}
-                          src={City2}
-                          width={{ xs: "17px", sm: "22px" }}
-                        />
-                      </InputAdornment>
-                    }
-                  />
-                }
-              >
-                <MenuItem value="" disabled>
-                  Select City
-                </MenuItem>
-                {citys?.map((option, i) => (
-                  <MenuItem
-                    key={i}
-                    value={option}
-                    onClick={() => setCityIndex(i)}
-                  >
-                    {option}
+                    "& .MuiSelect-icon": {
+                      borderRadius: "8px",
+                      border: "1px solid #1C274C",
+                      color: "#1C274C",
+                      width: { xs: "17px", sm: "22px" },
+                      height: { xs: "17px", sm: "22px" },
+                    },
+                  }}
+                  displayEmpty
+                  input={
+                    <InputBase
+                      startAdornment={
+                        <InputAdornment position="start">
+                          <Box
+                            component={"img"}
+                            src={City2}
+                            width={{ xs: "17px", sm: "22px" }}
+                          />
+                        </InputAdornment>
+                      }
+                    />
+                  }
+                >
+                  <MenuItem value="" disabled>
+                    Select the Professional Board
                   </MenuItem>
-                ))}
-              </Select>
+                  {citys?.map((option, i) => (
+                    <MenuItem
+                      key={i}
+                      value={option}
+                      onClick={() => setCityIndex(i)}
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
             </Stack>
             <Stack
               direction={{ xs: "column" }}
@@ -567,71 +632,93 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
               gap={{ xs: 2, sm: 3, md: 4 }}
               my={{ xs: 2, sm: 3, md: 4 }}
             >
-              <Select
-                value={data.category}
-                onChange={(e) => setData({ ...data, category: e.target.value })}
-                sx={{
-                  width: "100%",
-                  borderRadius: "15px",
-                  border: "1px solid #E6E6E6",
-                  background: "#FFF",
-                  p: { xs: 1, sm: 1.5 },
-                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  color: "#1C274C",
-                  "& .MuiSelect-icon": {
-                    borderRadius: "8px",
-                    border: "1px solid #1C274C",
+              <Box sx={{ width: "100%" }}>
+                <InputLabel
+                  htmlFor="category"
+                  sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                >
+                  {dataErrors.category}
+                </InputLabel>
+                <Select
+                  id="category"
+                  value={data.category}
+                  onChange={(e) =>
+                    setData({ ...data, category: e.target.value })
+                  }
+                  sx={{
+                    width: "100%",
+                    borderRadius: "15px",
+                    border: "1px solid #E6E6E6",
+                    background: "#FFF",
+                    p: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
                     color: "#1C274C",
-                    width: { xs: "17px", sm: "22px" },
-                    height: { xs: "17px", sm: "22px" },
-                  },
-                }}
-                displayEmpty
-                input={
-                  <InputBase
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <Box
-                          component={"img"}
-                          src={Layers}
-                          width={{ xs: "17px", sm: "22px" }}
-                        />
-                      </InputAdornment>
-                    }
-                  />
-                }
-              >
-                <MenuItem value="" disabled>
-                  License Category
-                </MenuItem>
-                {categories?.map((option, i) => (
-                  <MenuItem key={i} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Select>
-              <InputBase
-                placeholder="License Number"
-                value={data.license}
-                onChange={(e) => setData({ ...data, license: e.target.value })}
-                sx={{
-                  width: "100%",
-                  borderRadius: "15px",
-                  border: "1px solid #E6E6E6",
-                  background: "#FFF",
-                  p: { xs: 1, sm: 1.5 },
-                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                }}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Box
-                      component={"img"}
-                      src={AddD}
-                      width={{ xs: "17px", sm: "22px" }}
+                    "& .MuiSelect-icon": {
+                      borderRadius: "8px",
+                      border: "1px solid #1C274C",
+                      color: "#1C274C",
+                      width: { xs: "17px", sm: "22px" },
+                      height: { xs: "17px", sm: "22px" },
+                    },
+                  }}
+                  displayEmpty
+                  input={
+                    <InputBase
+                      startAdornment={
+                        <InputAdornment position="start">
+                          <Box
+                            component={"img"}
+                            src={Layers}
+                            width={{ xs: "17px", sm: "22px" }}
+                          />
+                        </InputAdornment>
+                      }
                     />
-                  </InputAdornment>
-                }
-              />
+                  }
+                >
+                  <MenuItem value="" disabled>
+                    License Category
+                  </MenuItem>
+                  {categories?.map((option, i) => (
+                    <MenuItem key={i} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputLabel
+                  htmlFor="license"
+                  sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                >
+                  {dataErrors.license}
+                </InputLabel>
+                <InputBase
+                  id="license"
+                  placeholder="License Number"
+                  value={data.license}
+                  onChange={(e) =>
+                    setData({ ...data, license: e.target.value })
+                  }
+                  sx={{
+                    width: "100%",
+                    borderRadius: "15px",
+                    border: "1px solid #E6E6E6",
+                    background: "#FFF",
+                    p: { xs: 1, sm: 1.5 },
+                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  }}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Box
+                        component={"img"}
+                        src={AddD}
+                        width={{ xs: "17px", sm: "22px" }}
+                      />
+                    </InputAdornment>
+                  }
+                />
+              </Box>
             </Stack>
             <Button
               sx={{
@@ -660,6 +747,21 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
             >
               Verify
             </Button>
+            <Box
+              sx={{
+                width: "100%",
+                color: responseMsg?.status ? "green" : "red",
+                textAlign: "center",
+                fontFamily: "Inter",
+                fontSize: { xs: "13px", sm: "16px" },
+                fontStyle: "normal",
+                fontWeight: "600",
+                lineHeight: "normal",
+                my: 3,
+              }}
+            >
+              {responseMsg?.message}
+            </Box>
           </Box>
         </Box>
       )}

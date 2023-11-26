@@ -19,26 +19,26 @@ const data = ["Home", "About", "Features", "Benefits", "Press Media", "FAQs"];
 
 export default function Header() {
   const [state, setState] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const location = useLocation();
+  // const navigate = useNavigate();
+  // const [anchorEl, setAnchorEl] = useState(null);
 
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handlePopoverOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+  // const handlePopoverClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const open = Boolean(anchorEl);
-  const togglePage = () => {
-    if (location.pathname === "/") {
-      navigate("/adminpage");
-    } else if (location.pathname === "/adminpage") {
-      navigate("/");
-    }
-  };
+  // const open = Boolean(anchorEl);
+  // const togglePage = () => {
+  //   if (location.pathname === "/") {
+  //     navigate("/adminpage");
+  //   } else if (location.pathname === "/adminpage") {
+  //     navigate("/");
+  //   }
+  // };
 
   const list = () => (
     <Box py={{ xs: 2, sm: 3, md: 4 }}>
@@ -153,17 +153,17 @@ export default function Header() {
               <PersonRounded
                 aria-owns={open ? "mouse-over-popover" : undefined}
                 aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen}
-                onMouseLeave={handlePopoverClose}
+                // onMouseEnter={handlePopoverOpen}
+                // onMouseLeave={handlePopoverClose}
                 sx={{
                   color: "#3821A5",
                   cursor: "pointer",
                 }}
-                onClick={() => {
-                  togglePage();
-                }}
+                // onClick={() => {
+                //   togglePage();
+                // }}
               />
-              {["/", "/adminpage"].includes(location.pathname) && (
+              {/* {["/", "/adminpage"].includes(location.pathname) && (
                 <Popover
                   id="mouse-over-popover"
                   sx={{
@@ -187,7 +187,7 @@ export default function Header() {
                       (location.pathname === "/adminpage" && "Plan Checker")}
                   </Typography>
                 </Popover>
-              )}
+              )} */}
             </Stack>
           </Hidden>
           <Hidden mdUp>

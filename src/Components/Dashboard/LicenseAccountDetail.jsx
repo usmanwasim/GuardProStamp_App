@@ -12,17 +12,17 @@ import {
   TableRow,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function LicenseAccountDetail({
   data,
-  // setAdd,
+  setAdd,
   setEdit,
   setDel,
   setDelData,
   setEditData,
 }) {
-  const Navigate = useNavigate();
+  // const Navigate = useNavigate();
 
   return (
     <Box>
@@ -72,7 +72,14 @@ export default function LicenseAccountDetail({
                   </Stack>
                 </TableCell>
                 <TableCell align="left">Email</TableCell>
-                <TableCell align="left">Documents</TableCell>
+                <TableCell align="left">
+                  License <br />
+                  Payment
+                </TableCell>
+                <TableCell align="left">
+                  Licensee
+                  <br /> Information
+                </TableCell>
                 <TableCell align="left">Status</TableCell>
                 <TableCell align="left">Actions</TableCell>
               </TableRow>
@@ -100,8 +107,16 @@ export default function LicenseAccountDetail({
                     </Stack>
                   </TableCell>
                   <TableCell align="left">{item?.email}</TableCell>
+                  <TableCell align="left">
+                    {item?.subscriptionMeta?.subscribed
+                      ? "Active Until"
+                      : "Not Subscribed"}
+                    <br />
+                    {item?.subscriptionMeta?.subscriptionEndDate}
+                  </TableCell>
+
                   <TableCell align="left" sx={{ textDecoration: "underline" }}>
-                    File Name
+                    View
                   </TableCell>
                   <TableCell align="left">{item?.status}</TableCell>
                   <TableCell align="left">
@@ -168,8 +183,8 @@ export default function LicenseAccountDetail({
           },
         }}
         onClick={() => {
-          // setAdd(true);
-          Navigate("/signup");
+          setAdd(true);
+          // Navigate("/signup");
         }}
       >
         Add

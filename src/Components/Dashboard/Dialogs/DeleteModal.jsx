@@ -1,6 +1,7 @@
 import { Close } from "@mui/icons-material";
 import { Box, Button, Dialog, Slide, Stack } from "@mui/material";
 import React from "react";
+
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axiosApiInstance from "../../../api/api";
@@ -113,9 +114,9 @@ export default function DeleteModal({ open, setOpen, data, setData }) {
   );
 }
 
-DeleteModal.prototype = {
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-  data: PropTypes.object,
-  setData: PropTypes.func,
+DeleteModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  setData: PropTypes.func.isRequired,
 };

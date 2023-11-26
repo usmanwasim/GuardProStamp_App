@@ -1,10 +1,29 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Menu, MenuItem, Stack } from "@mui/material";
 import { PersonRounded } from "@mui/icons-material";
 import LOGO from "../../assets/Images/Logo.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { handleLoggedOut } from "../../api/api";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const loggedOut = async () => {
+    let response = await handleLoggedOut();
+    if (response?.data?.status == "success") {
+      sessionStorage.removeItem("jwt-token");
+      localStorage.removeItem("userData");
+      navigate("/");
+    }
+  };
 
   return (
     <Box width={"100%"}>
@@ -27,11 +46,34 @@ export default function Header() {
           }}
         />
         <PersonRounded
+          id="basic-button"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
           sx={{
             color: "#3821A5",
             cursor: "pointer",
           }}
         />
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              loggedOut();
+              handleClose();
+            }}
+          >
+            logout
+          </MenuItem>
+        </Menu>
       </Stack>
     </Box>
   );

@@ -4,6 +4,7 @@ import {
   Container,
   InputAdornment,
   InputBase,
+  InputLabel,
   MenuItem,
   Select,
   Stack,
@@ -21,7 +22,7 @@ import closeeye from "../assets/Images/close-eye.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleRegister } from "../api/api";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import axios from "axios";
 
 // const options = ["Option 1", "Option 2", "Option 3"];
@@ -32,8 +33,22 @@ export default function Signup() {
   const [confirm, setConfirm] = useState(false);
   const [password, setPassword] = useState(false);
   const [colorConfirm, setColorConfirm] = useState(false);
+  const [responseMsg, setResponseMsg] = useState({
+    status: null,
+    message: "",
+  });
   const [data, setData] = useState({
     asPlanChecker: true,
+    city: "",
+    state: "",
+    agency: "",
+    department: "",
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+  const [dataErrors, setDataErrors] = useState({
     city: "",
     state: "",
     agency: "",
@@ -73,35 +88,133 @@ export default function Signup() {
 
   const handleSignup = async () => {
     if (!data?.state) {
-      toast.error("Please select State");
+      // toast.error("Please select State");
+      setDataErrors({
+        ...dataErrors,
+        state: "Please select State",
+      });
     } else if (!data?.city) {
-      toast.error("Please select City");
+      // toast.error("Please select City");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "Please select City",
+      });
     } else if (!data?.agency) {
-      toast.error("Please select Agency");
+      // toast.error("Please select Agency");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "Please select Agency",
+      });
     } else if (!data?.department) {
-      toast.error("Please select Department");
+      // toast.error("Please select Department");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "Please select Department",
+      });
     } else if (!data?.name) {
-      toast.error("Please enter Name");
+      // toast.error("Please enter Name");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "Please enter Name",
+      });
     } else if (!data?.email) {
-      toast.error("Please enter Email");
+      // toast.error("Please enter Email");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "",
+        email: "Please enter Email",
+      });
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data?.email)) {
-      toast.error("Invalid Email Format");
+      // toast.error("Invalid Email Format");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "",
+        email: "Invalid Email Format",
+      });
     } else if (!data?.password) {
-      toast.error("Please enter Password");
+      // toast.error("Please enter Password");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "",
+        email: "",
+        password: "Please enter Password",
+      });
     } else if (!data?.cpassword) {
-      toast.error("Please enter Confirm Password");
+      // toast.error("Please enter Confirm Password");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "",
+        email: "",
+        password: "",
+        cpassword: "Please enter Confirm Password",
+      });
     } else if (data?.password !== data?.cpassword) {
-      toast.error("Invalid Confirm Password");
+      // toast.error("Invalid Confirm Password");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "",
+        email: "",
+        password: "",
+        cpassword: "Invalid Confirm Password",
+      });
     } else {
-      // console.log(data);
       try {
+        setDataErrors({
+          ...dataErrors,
+          state: "",
+          city: "",
+          agency: "",
+          department: "",
+          name: "",
+          email: "",
+          password: "",
+          cpassword: "",
+        });
         const resp = await handleRegister(data);
         if (resp?.data?.status == "success") {
-          toast.success(resp?.data?.message);
-          navigate("/login");
+          setResponseMsg({
+            status: true,
+            message: resp?.data?.message,
+          });
+          // toast.success(resp?.data?.message);
+          // navigate("/login");
         }
       } catch (err) {
-        toast.error(err?.response?.data?.message);
+        // toast.error(err?.response?.data?.message);
+        setResponseMsg({
+          status: false,
+          message: err?.response?.data?.message,
+        });
       }
     }
   };
@@ -145,94 +258,114 @@ export default function Signup() {
                 gap={{ xs: 2, sm: 3, md: 4 }}
                 my={{ xs: 2, sm: 3, md: 4 }}
               >
-                <Select
-                  value={data.state}
-                  onChange={(e) => setData({ ...data, state: e.target.value })}
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    color: "#1C274C",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                    "& .MuiSelect-icon": {
-                      borderRadius: "8px",
-                      border: "1px solid #1C274C",
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="state"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.state}
+                  </InputLabel>
+                  <Select
+                    id="state"
+                    value={data.state}
+                    onChange={(e) =>
+                      setData({ ...data, state: e.target.value })
+                    }
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
                       color: "#1C274C",
-                      width: { xs: "17px", sm: "22px" },
-                      height: { xs: "17px", sm: "22px" },
-                    },
-                  }}
-                  displayEmpty
-                  input={
-                    <InputBase
-                      startAdornment={
-                        <InputAdornment position="start">
-                          <Box
-                            component={"img"}
-                            src={City}
-                            width={{ xs: "17px", sm: "22px" }}
-                          />
-                        </InputAdornment>
-                      }
-                    />
-                  }
-                >
-                  <MenuItem value="" disabled>
-                    Enter your state
-                  </MenuItem>
-                  {states.map((item, i) => (
-                    <MenuItem key={i} value={item.stateName}>
-                      {item.stateName}
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                      "& .MuiSelect-icon": {
+                        borderRadius: "8px",
+                        border: "1px solid #1C274C",
+                        color: "#1C274C",
+                        width: { xs: "17px", sm: "22px" },
+                        height: { xs: "17px", sm: "22px" },
+                      },
+                    }}
+                    displayEmpty
+                    input={
+                      <InputBase
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <Box
+                              component={"img"}
+                              src={City}
+                              width={{ xs: "17px", sm: "22px" }}
+                            />
+                          </InputAdornment>
+                        }
+                      />
+                    }
+                  >
+                    <MenuItem value="" disabled>
+                      Enter your state
                     </MenuItem>
-                  ))}
-                </Select>
-                <Select
-                  value={data.city}
-                  onChange={(e) => setData({ ...data, city: e.target.value })}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                    color: "#1C274C",
-                    "& .MuiSelect-icon": {
-                      borderRadius: "8px",
-                      border: "1px solid #1C274C",
+                    {states.map((item, i) => (
+                      <MenuItem key={i} value={item.stateName}>
+                        {item.stateName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="city"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.city}
+                  </InputLabel>
+                  <Select
+                    id="city"
+                    value={data.city}
+                    onChange={(e) => setData({ ...data, city: e.target.value })}
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
                       color: "#1C274C",
-                      width: { xs: "17px", sm: "22px" },
-                      height: { xs: "17px", sm: "22px" },
-                    },
-                  }}
-                  displayEmpty
-                  input={
-                    <InputBase
-                      startAdornment={
-                        <InputAdornment position="start">
-                          <Box
-                            component={"img"}
-                            src={City2}
-                            width={{ xs: "17px", sm: "22px" }}
-                          />
-                        </InputAdornment>
-                      }
-                    />
-                  }
-                >
-                  <MenuItem value="" disabled>
-                    Enter your city
-                  </MenuItem>
-                  {citys?.map((option, i) => (
-                    <MenuItem key={i} value={option}>
-                      {option}
+                      "& .MuiSelect-icon": {
+                        borderRadius: "8px",
+                        border: "1px solid #1C274C",
+                        color: "#1C274C",
+                        width: { xs: "17px", sm: "22px" },
+                        height: { xs: "17px", sm: "22px" },
+                      },
+                    }}
+                    displayEmpty
+                    input={
+                      <InputBase
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <Box
+                              component={"img"}
+                              src={City2}
+                              width={{ xs: "17px", sm: "22px" }}
+                            />
+                          </InputAdornment>
+                        }
+                      />
+                    }
+                  >
+                    <MenuItem value="" disabled>
+                      Enter your city
                     </MenuItem>
-                  ))}
-                </Select>
+                    {citys?.map((option, i) => (
+                      <MenuItem key={i} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
               </Stack>
               {/* agency & departments  selects*/}
               {/* <Stack
@@ -339,52 +472,72 @@ export default function Signup() {
                 gap={{ xs: 2, sm: 3, md: 4 }}
                 my={{ xs: 2, sm: 3, md: 4 }}
               >
-                <InputBase
-                  placeholder="Enter your agency"
-                  value={data.agency}
-                  onChange={(e) => setData({ ...data, agency: e.target.value })}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={City1}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                />
-                <InputBase
-                  placeholder="Enter your department"
-                  value={data.department}
-                  onChange={(e) =>
-                    setData({ ...data, department: e.target.value })
-                  }
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={Layers}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                />
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="agency"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.agency}
+                  </InputLabel>
+                  <InputBase
+                    id="agency"
+                    placeholder="Enter your agency"
+                    value={data.agency}
+                    onChange={(e) =>
+                      setData({ ...data, agency: e.target.value })
+                    }
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={City1}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="department"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.department}
+                  </InputLabel>
+                  <InputBase
+                    id="department"
+                    placeholder="Enter your department"
+                    value={data.department}
+                    onChange={(e) =>
+                      setData({ ...data, department: e.target.value })
+                    }
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={Layers}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
               </Stack>
               {/* user name email password */}
               <Stack
@@ -394,50 +547,70 @@ export default function Signup() {
                 gap={{ xs: 2, sm: 3, md: 4 }}
                 my={{ xs: 2, sm: 3, md: 4 }}
               >
-                <InputBase
-                  placeholder="Enter your name"
-                  value={data.name}
-                  onChange={(e) => setData({ ...data, name: e.target.value })}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={User}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                />
-                <InputBase
-                  placeholder="Enter your email"
-                  value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={Letter}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                />
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="name"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.name}
+                  </InputLabel>
+                  <InputBase
+                    id="name"
+                    placeholder="Enter your name"
+                    value={data.name}
+                    onChange={(e) => setData({ ...data, name: e.target.value })}
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={User}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="email"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.email}
+                  </InputLabel>
+                  <InputBase
+                    id="email"
+                    placeholder="Enter your email"
+                    value={data.email}
+                    onChange={(e) =>
+                      setData({ ...data, email: e.target.value })
+                    }
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={Letter}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
               </Stack>
               <Stack
                 direction="column"
@@ -446,89 +619,107 @@ export default function Signup() {
                 gap={{ xs: 2, sm: 3, md: 4 }}
                 my={{ xs: 2, sm: 3, md: 4 }}
               >
-                <InputBase
-                  placeholder="Enter your password"
-                  value={data.password}
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
-                  type={password ? "text" : "password"}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={Lock}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={password ? eye : closeeye}
-                        sx={{
-                          cursor: "pointer",
-                        }}
-                        width={{ xs: "17px", sm: "22px" }}
-                        onClick={() => {
-                          setPassword((pre) => !pre);
-                        }}
-                      />
-                    </InputAdornment>
-                  }
-                />
-                <InputBase
-                  placeholder="Confirm Password"
-                  value={data.cpassword}
-                  onChange={(e) =>
-                    setData({ ...data, cpassword: e.target.value })
-                  }
-                  type={confirm ? "text" : "password"}
-                  sx={{
-                    width: "100%",
-                    borderRadius: "15px",
-                    border: colorConfirm
-                      ? "1px solid red"
-                      : "1px solid #E6E6E6",
-                    background: "#FFF",
-                    p: { xs: 1, sm: 1.5 },
-                    fontSize: { xs: "12px", sm: "14px", md: "16px" },
-                    color: colorConfirm ? "red" : "black",
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={Lock}
-                        width={{ xs: "17px", sm: "22px" }}
-                      />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={"img"}
-                        src={confirm ? eye : closeeye}
-                        sx={{
-                          cursor: "pointer",
-                        }}
-                        width={{ xs: "17px", sm: "22px" }}
-                        onClick={() => {
-                          setConfirm((pre) => !pre);
-                        }}
-                      />
-                    </InputAdornment>
-                  }
-                />
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="password"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.password}
+                  </InputLabel>
+                  <InputBase
+                    id="password"
+                    placeholder="Enter your password"
+                    value={data.password}
+                    onChange={(e) =>
+                      setData({ ...data, password: e.target.value })
+                    }
+                    type={password ? "text" : "password"}
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={Lock}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={password ? eye : closeeye}
+                          sx={{
+                            cursor: "pointer",
+                          }}
+                          width={{ xs: "17px", sm: "22px" }}
+                          onClick={() => {
+                            setPassword((pre) => !pre);
+                          }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <InputLabel
+                    htmlFor="cpassword"
+                    sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "red" }}
+                  >
+                    {dataErrors.cpassword}
+                  </InputLabel>
+                  <InputBase
+                    id="cpassword"
+                    placeholder="Confirm Password"
+                    value={data.cpassword}
+                    onChange={(e) =>
+                      setData({ ...data, cpassword: e.target.value })
+                    }
+                    type={confirm ? "text" : "password"}
+                    sx={{
+                      width: "100%",
+                      borderRadius: "15px",
+                      border: colorConfirm
+                        ? "1px solid red"
+                        : "1px solid #E6E6E6",
+                      background: "#FFF",
+                      p: { xs: 1, sm: 1.5 },
+                      fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                      color: colorConfirm ? "red" : "black",
+                    }}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={Lock}
+                          width={{ xs: "17px", sm: "22px" }}
+                        />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment position="start">
+                        <Box
+                          component={"img"}
+                          src={confirm ? eye : closeeye}
+                          sx={{
+                            cursor: "pointer",
+                          }}
+                          width={{ xs: "17px", sm: "22px" }}
+                          onClick={() => {
+                            setConfirm((pre) => !pre);
+                          }}
+                        />
+                      </InputAdornment>
+                    }
+                  />
+                </Box>
               </Stack>
               <Button
                 sx={{
@@ -576,6 +767,21 @@ export default function Signup() {
                   {" "}
                   Login
                 </span>
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  color: responseMsg?.status ? "#00B26A" : "red",
+                  textAlign: "center",
+                  fontFamily: "Inter",
+                  fontSize: { xs: "13px", sm: "16px" },
+                  fontStyle: "normal",
+                  fontWeight: "600",
+                  lineHeight: "normal",
+                  mb: 3,
+                }}
+              >
+                {responseMsg?.message}
               </Box>
             </Container>
           </Box>
