@@ -1,8 +1,9 @@
 import { Box, Button, Container } from "@mui/material";
 import checkerloginimg from "../assets/Images/checkerimg.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Desktop2() {
+  const location = useLocation();
   const navigate = useNavigate();
   return (
     <Box
@@ -49,7 +50,9 @@ export default function Desktop2() {
                 border: "1px solid #fff",
               },
             }}
-            onClick={() => navigate("/loginpage")}
+            onClick={() => {
+              navigate("/loginpage", { state: { history: location.pathname } });
+            }}
           >
             Plan Checker
           </Button>

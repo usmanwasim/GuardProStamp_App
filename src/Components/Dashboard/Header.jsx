@@ -1,4 +1,4 @@
-import { Box, Menu, MenuItem, Stack } from "@mui/material";
+import { Box, Button, Menu, MenuItem, Stack } from "@mui/material";
 import { PersonRounded } from "@mui/icons-material";
 import LOGO from "../../assets/Images/Logo.png";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,22 @@ export default function Header() {
             navigate("/");
           }}
         />
-        <PersonRounded
+        <Button
+          sx={{
+            color: "#3821A5",
+            background: "transparent",
+            border: "1px solid #3821A5",
+            cursor: "pointer",
+            "&:hover": {
+              background: "#3821A5",
+              color: "white",
+            },
+          }}
+          onClick={() => loggedOut()}
+        >
+          Logout
+        </Button>
+        {/* <PersonRounded
           id="basic-button"
           aria-controls={open ? "basic-menu" : undefined}
           aria-haspopup="true"
@@ -73,7 +88,7 @@ export default function Header() {
           >
             logout
           </MenuItem>
-        </Menu>
+        </Menu> */}
       </Stack>
     </Box>
   );

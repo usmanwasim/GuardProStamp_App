@@ -19,8 +19,8 @@ const data = ["Home", "About", "Features", "Benefits", "Press Media", "FAQs"];
 
 export default function Header() {
   const [state, setState] = useState(false);
-  // const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
   // const [anchorEl, setAnchorEl] = useState(null);
 
   // const handlePopoverOpen = (event) => {
@@ -108,7 +108,13 @@ export default function Header() {
             component={"img"}
             src={LOGO}
             alt="Logo"
-            width={{ xs: "120px", sm: "150px", md: "180px" }}
+            sx={{
+              cursor: "pointer",
+              width: { xs: "120px", sm: "150px", md: "180px" },
+            }}
+            onClick={() => {
+              navigate(location?.state?.history);
+            }}
           />
           <Hidden mdDown>
             <Stack

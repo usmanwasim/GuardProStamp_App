@@ -15,7 +15,7 @@ export default function Footer() {
   };
   return (
     <>
-      <Box sx={{}}>
+      <Box sx={{ mt: 2 }}>
         <Container maxWidth="xl">
           <Stack
             direction="row"
@@ -32,7 +32,7 @@ export default function Footer() {
             />
             <Stack direction="row" sx={{ gap: 5, alignItems: "center" }}>
               <Box sx={{}}>
-                <Box>sales@guardprostamp.com</Box>
+                <Box sx={{ fontSize: "20px" }}>sales@guardprostamp.com</Box>
                 {/* <Box sx={{ mt: 0.5 }}>
                   4 Peddlers Row Unit 299, Newark, DE 19702
                 </Box> */}
@@ -40,13 +40,20 @@ export default function Footer() {
               <Box
                 sx={{
                   textTransform: "capitalize",
-                  border: "1px solid #000",
+                  background: "#3B17AD",
+                  color: "#fff",
+                  border: "1px solid #3B17AD",
+                  boxShadow: "0px 15px 25px 0px rgba(59, 23, 173, 0.25)",
                   height: "max-content",
                   padding: "7px 10px",
 
                   borderRadius: "7px",
                   fontSize: "0.9rem",
                   cursor: "pointer",
+                  "&:hover": {
+                    color: "#3B17AD",
+                    background: "#fff",
+                  },
                 }}
                 onClick={() => {
                   togglePage();
@@ -62,7 +69,8 @@ export default function Footer() {
               mt: 1,
               width: "100%",
               textAlign: "center",
-              fontSize: "0.7rem",
+              fontSize: "0.9rem",
+              pb: 0.5,
             }}
           >
             COPYRIGHT © 2023 Guard ProStamp Inc, - ALL RIGHTS RESERVED.

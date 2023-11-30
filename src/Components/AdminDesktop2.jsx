@@ -1,8 +1,9 @@
 import { Box, Button, Container } from "@mui/material";
-import checkerloginimg from "../assets/Images/checkerimg.png";
-import { useNavigate } from "react-router-dom";
+import checkerloginimg from "../assets/Images/adminimg.png";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Desktop2() {
+  const location = useLocation();
   const navigate = useNavigate();
   return (
     <Box
@@ -50,7 +51,7 @@ export default function Desktop2() {
               },
             }}
             onClick={() => {
-              navigate("/loginpage");
+              navigate("/loginpage", { state: { history: location.pathname } });
             }}
           >
             Admin

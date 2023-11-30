@@ -13,10 +13,12 @@ import { Container } from "@mui/material";
 import PersistLogin from "./PersistLogin";
 import ForgotPassword from "../Components/ForgotPassword";
 import Footer from "./Footer.jsx";
+import SignupRedirect from "../Components/SignupRedirect.jsx";
 
 export default function Renderer() {
   const location = useLocation();
   let userJwtToken = sessionStorage.getItem("jwt-token");
+
   return (
     <>
       {["/planchecker", "/dashboard"].includes(location.pathname) &&
@@ -32,6 +34,7 @@ export default function Renderer() {
         <Route exact path="/adminpage" element={<AdminDesktop2 />} />
         <Route exact path="/loginpage" element={<Desktop1 />} />
         <Route exact path="/signup" element={<Signup />} />
+        <Route exact path="/signup_redirect" element={<SignupRedirect />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/forgetpassword" element={<ForgotPassword />} />
 

@@ -44,11 +44,12 @@ export default function AccountsDetails() {
   const [licenseAccountData, setLicenseAccountData] = useState([]);
   const [Del, setDel] = useState(false);
   const [delData, setDelData] = useState({});
-  const [add, setAdd] = useState(false);
   const [add1, setAdd1] = useState(false);
+  const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editData, setEditData] = useState({});
   const [search, setSearch] = useState("");
+
   // Tabs state
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -93,6 +94,8 @@ export default function AccountsDetails() {
       />
       <AddLicenseAccount open={add} setOpen={setAdd} />
       <AddPlancheckerAccount open={add1} setOpen={setAdd1} />
+
+      {/* page content */}
       <Box mb={{ xs: 2, sm: 3 }}>
         <Tabs
           value={value}

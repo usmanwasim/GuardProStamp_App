@@ -264,6 +264,15 @@ export default function Login() {
                   Forget Password
                 </Box>
               </Stack>
+              <Box
+                sx={{
+                  textAlign: "center",
+                  color: responseMsg?.status ? "#00B26A" : "red",
+                  mb: { xs: 1, sm: 2, md: 2.5 },
+                }}
+              >
+                {responseMsg?.message}
+              </Box>
               <Button
                 sx={{
                   borderRadius: "15px",
@@ -312,14 +321,6 @@ export default function Login() {
                   {" "}
                   Signup
                 </span>
-              </Box>
-              <Box
-                sx={{
-                  textAlign: "center",
-                  color: responseMsg?.status ? "#00B26A" : "red",
-                }}
-              >
-                {responseMsg?.message}
               </Box>
             </Container>
           </Box>

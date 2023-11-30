@@ -206,6 +206,7 @@ export default function Signup() {
             status: true,
             message: resp?.data?.message,
           });
+          navigate("/signup_redirect");
           // toast.success(resp?.data?.message);
           // navigate("/login");
         }
@@ -721,6 +722,21 @@ export default function Signup() {
                   />
                 </Box>
               </Stack>
+              <Box
+                sx={{
+                  width: "100%",
+                  color: responseMsg?.status ? "#00B26A" : "red",
+                  textAlign: "center",
+                  fontFamily: "Inter",
+                  fontSize: { xs: "13px", sm: "16px" },
+                  fontStyle: "normal",
+                  fontWeight: "600",
+                  lineHeight: "normal",
+                  mb: { xs: 1, sm: 2, md: 2.5 },
+                }}
+              >
+                {responseMsg?.message}
+              </Box>
               <Button
                 sx={{
                   borderRadius: "15px",
@@ -767,21 +783,6 @@ export default function Signup() {
                   {" "}
                   Login
                 </span>
-              </Box>
-              <Box
-                sx={{
-                  width: "100%",
-                  color: responseMsg?.status ? "#00B26A" : "red",
-                  textAlign: "center",
-                  fontFamily: "Inter",
-                  fontSize: { xs: "13px", sm: "16px" },
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  lineHeight: "normal",
-                  mb: 3,
-                }}
-              >
-                {responseMsg?.message}
               </Box>
             </Container>
           </Box>

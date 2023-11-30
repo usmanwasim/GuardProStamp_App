@@ -1,9 +1,11 @@
 import { Box, Button, Container } from "@mui/material";
 import checkerloginimg from "../assets/Images/checkerloginimg.png";
-import { useNavigate } from "react-router-dom";
+import adminloginimg from "../assets/Images/adminloginimg.png";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Desktop1() {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Box
       sx={{
@@ -24,7 +26,11 @@ export default function Desktop1() {
         >
           <Box
             component={"img"}
-            src={checkerloginimg}
+            src={
+              location.state.history === "/adminpage"
+                ? adminloginimg
+                : checkerloginimg
+            }
             alt="img"
             width={"100%"}
           />
