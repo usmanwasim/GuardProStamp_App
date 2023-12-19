@@ -18,18 +18,24 @@ export default function AddModal({ open, setOpen }) {
   const [message, setMessage] = useState({ status: false, message: "" });
   const handleAddAccount = async () => {
     try {
+      const validPassword = new RegExp("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$");
       if (!data?.first) {
         setMessage({ status: false, message: "Please Enter First Name" });
       } else if (!data?.email) {
         setMessage({ status: false, message: "Please Enter Email" });
-      } else if (!data?.dateOfBirth) {
-        setMessage({ status: false, message: "Please Select Date Of Birth" });
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data?.email)
-      ) {
+      }
+      //  else if (!data?.dateOfBirth) {
+      //   setMessage({ status: false, message: "Please Select Date Of Birth" });
+      // }
+      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data?.email)) {
         setMessage({ status: false, message: "Invalid Email Format" });
       } else if (!data?.password) {
         setMessage({ status: false, message: "Please Enter Password" });
+      } else if (!validPassword.test(data?.password)) {
+        setMessage({
+          status: false,
+          message: "Must Match Format : (Alphabet & Numerics) & length-6",
+        });
       } else {
         const resp = await handleRegister({
           name: data?.first + " " + data?.middle + " " + data?.last,
@@ -50,6 +56,8 @@ export default function AddModal({ open, setOpen }) {
             email: "",
             password: "",
           });
+          // reload window for the user we added
+          window.location.reload();
           setOpen(false);
         }
       }

@@ -21,6 +21,7 @@ export default function AddModal({ open, setOpen }) {
 
   const handleAddAccount = async () => {
     try {
+      const validPassword = new RegExp("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$");
       if (!data?.state) {
         setMessage({ status: false, message: "Please Enter State" });
       } else if (!data?.city) {
@@ -39,6 +40,11 @@ export default function AddModal({ open, setOpen }) {
         setMessage({ status: false, message: "Invalid Email Format" });
       } else if (!data?.password) {
         setMessage({ status: false, message: "Please Enter Password" });
+      } else if (!validPassword.test(data?.password)) {
+        setMessage({
+          status: false,
+          message: "Password Format : (Alphabet & Numerics) & length-6",
+        });
       } else {
         const resp = await handleRegister(data);
         if (resp?.data?.status == "success") {
@@ -56,6 +62,8 @@ export default function AddModal({ open, setOpen }) {
             email: "",
             password: "",
           });
+          // reload window for the user we added
+          window.location.reload();
           setOpen(false);
         }
       }

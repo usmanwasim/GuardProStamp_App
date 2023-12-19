@@ -41,8 +41,9 @@ export default function ForgotPassword() {
       toast.error("Invalid Email Format");
     } else {
       try {
-        const response = await handleForgotVerifyCode(data?.email);
-        toast.success(response?.data?.message);
+        // const response =
+        await handleForgotVerifyCode(data?.email);
+        // toast.success(response?.data?.message);
         setState(true);
       } catch (err) {
         toast.error(err?.response?.data?.message);
@@ -65,7 +66,7 @@ export default function ForgotPassword() {
           password: data?.password,
         })
         .then((res) => {
-          toast.success(res?.data?.message);
+          // toast.success(res?.data?.message);
           setTimeout(() => {
             navigate("/login");
           }, 2000);

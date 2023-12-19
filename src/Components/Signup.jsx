@@ -87,6 +87,7 @@ export default function Signup() {
   }, [data.cpassword]);
 
   const handleSignup = async () => {
+    const validPassword = new RegExp("^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$");
     if (!data?.state) {
       // toast.error("Please select State");
       setDataErrors({
@@ -160,6 +161,18 @@ export default function Signup() {
         name: "",
         email: "",
         password: "Please enter Password",
+      });
+    } else if (!validPassword.test(data?.password)) {
+      // toast.error("Please enter Password");
+      setDataErrors({
+        ...dataErrors,
+        state: "",
+        city: "",
+        agency: "",
+        department: "",
+        name: "",
+        email: "",
+        password: "Must Match Format : (Alphabet & Numerics) & length-6",
       });
     } else if (!data?.cpassword) {
       // toast.error("Please enter Confirm Password");
