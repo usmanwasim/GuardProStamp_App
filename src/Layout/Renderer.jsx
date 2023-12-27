@@ -19,6 +19,7 @@ import TermsAndConditions from "../Components/LegalPages/TermAndConditions.jsx";
 import PrivacyPolicy from "../Components/LegalPages/PrivacyPolicy.jsx";
 import LegalDisclaimer from "../Components/LegalPages/LegalDisclaimer.jsx";
 import DMCA from "../Components/LegalPages/DMCA.jsx";
+import RefundPolicy from "../Components/LegalPages/RefundPolicy.jsx";
 
 export default function Renderer() {
   const location = useLocation();
@@ -45,8 +46,9 @@ export default function Renderer() {
         <Route exact path="/complaint-policy" element={<ComplainstsPolicy />} />
         <Route exact path="/terms-policy" element={<TermsAndConditions />} />
         <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route exact path="/legal-policy" element={<LegalDisclaimer />} />
+        <Route exact path="/legaldesclaimer-policy" element={<LegalDisclaimer />} />
         <Route exact path="/dmca-policy" element={<DMCA />} />
+        <Route exact path="/refund-policy" element={<RefundPolicy />} />
         
 
         <Route element={<PersistLogin />}>
