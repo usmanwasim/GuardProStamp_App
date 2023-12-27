@@ -1,12 +1,24 @@
-import { Box, Button, Dialog, InputBase, Slide, Stack } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Dialog,
+  InputBase,
+  MenuItem,
+  Select,
+  Slide,
+  Stack,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { handleRegister } from "../../../api/api";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 export default function AddModal({ open, setOpen }) {
+  const [states, setStates] = useState([]);
+  const [citys, setCitys] = useState([]);
   const [data, setData] = useState({
     asPlanChecker: true,
     city: "",
@@ -18,6 +30,26 @@ export default function AddModal({ open, setOpen }) {
     password: "",
   });
   const [message, setMessage] = useState({ status: false, message: "" });
+
+  useEffect(() => {
+    const getStatesCity = async () => {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}statesAndCities`
+      );
+      setStates(response?.data?.data);
+    };
+    getStatesCity();
+  }, []);
+
+  useEffect(() => {
+    let citydata = states.filter(
+      (state) => state.stateName === data.state && state.stateCity
+    );
+    let cityData = citydata[0]?.stateCity;
+    // Sort the professionalType array alphabetically
+    cityData?.sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+    setCitys(cityData);
+  }, [data.state]);
 
   const handleAddAccount = async () => {
     try {
@@ -109,7 +141,77 @@ export default function AddModal({ open, setOpen }) {
               gap: { xs: 1, sm: 1.5 },
             }}
           >
-            <InputBase
+            <Box sx={{ width: "100%" }}>
+              <Select
+                id="state"
+                value={data.state}
+                onChange={(e) => setData({ ...data, state: e.target.value })}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "15px",
+                  border: "1px solid #4CECB2",
+                  background: "rgba(76, 236, 178, 0.10)",
+                  color: "#1C274C",
+                  p: { xs: 0.8, sm: 1 },
+                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  "& .MuiSelect-icon": {
+                    borderRadius: "8px",
+                    border: "1px solid #1C274C",
+                    color: "#1C274C",
+                    width: { xs: "17px", sm: "22px" },
+                    height: { xs: "17px", sm: "22px" },
+                  },
+                }}
+                displayEmpty
+                input={<InputBase />}
+              >
+                <MenuItem value="" disabled>
+                  Enter your state
+                </MenuItem>
+                {states.map((item, i) => (
+                  <MenuItem key={i} value={item.stateName}>
+                    {item.stateName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+            <Box sx={{ width: "100%" }}>
+              <Select
+                id="city"
+                value={data.city}
+                onChange={(e) => setData({ ...data, city: e.target.value })}
+                sx={{
+                  width: "100%",
+                  borderRadius: "15px",
+                  border: "1px solid #4CECB2",
+                  background: "rgba(76, 236, 178, 0.10)",
+                  p: { xs: 0.8, sm: 1 },
+                  fontSize: { xs: "12px", sm: "14px", md: "16px" },
+                  color: "#1C274C",
+                  "& .MuiSelect-icon": {
+                    borderRadius: "8px",
+                    border: "1px solid #1C274C",
+                    color: "#1C274C",
+                    width: { xs: "17px", sm: "22px" },
+                    height: { xs: "17px", sm: "22px" },
+                  },
+                }}
+                displayEmpty
+                input={<InputBase />}
+              >
+                <MenuItem value="" disabled>
+                  Enter your city
+                </MenuItem>
+                {citys?.map((option, i) => (
+                  <MenuItem key={i} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Box>
+            {/* <InputBase
               placeholder="state"
               sx={{
                 borderRadius: "12px",
@@ -140,7 +242,7 @@ export default function AddModal({ open, setOpen }) {
                   city: e.target.value,
                 });
               }}
-            />
+            /> */}
           </Stack>
           <Stack
             direction="row"

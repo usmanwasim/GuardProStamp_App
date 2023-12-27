@@ -41,7 +41,9 @@ function a11yProps(index) {
 
 export default function AccountsDetails() {
   const [planCheckerdata, setPlanCheckerdata] = useState([]);
+  const [planCheckerdata1, setPlanCheckerdata1] = useState([]);
   const [licenseAccountData, setLicenseAccountData] = useState([]);
+  const [licenseAccountData1, setLicenseAccountData1] = useState([]);
   const [Del, setDel] = useState(false);
   const [delData, setDelData] = useState({});
   const [add1, setAdd1] = useState(false);
@@ -49,6 +51,25 @@ export default function AccountsDetails() {
   const [edit, setEdit] = useState(false);
   const [editData, setEditData] = useState({});
   const [search, setSearch] = useState("");
+
+  // filter for search
+  useEffect(() => {
+    if (search) {
+      setPlanCheckerdata1(
+        planCheckerdata.filter((item) =>
+          item?.name?.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+      setLicenseAccountData1(
+        licenseAccountData.filter((item) =>
+          item?.name?.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    } else {
+      setPlanCheckerdata1(planCheckerdata);
+      setLicenseAccountData1(licenseAccountData);
+    }
+  }, [search]);
 
   // Tabs state
   const [value, setValue] = useState(0);
@@ -167,7 +188,7 @@ export default function AccountsDetails() {
       </Stack>
       <CustomTabPanel value={value} index={0}>
         <LicenseAccountDetail
-          data={licenseAccountData}
+          data={licenseAccountData1}
           setAdd={setAdd}
           setEdit={setEdit}
           setDel={setDel}
@@ -177,7 +198,7 @@ export default function AccountsDetails() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <PlanCheckerDetail
-          data={planCheckerdata}
+          data={planCheckerdata1}
           setAdd={setAdd1}
           setEdit={setEdit}
           setDel={setDel}
