@@ -14,6 +14,11 @@ import PersistLogin from "./PersistLogin";
 import ForgotPassword from "../Components/ForgotPassword";
 import Footer from "./Footer.jsx";
 import SignupRedirect from "../Components/SignupRedirect.jsx";
+import ComplainstsPolicy from "../Components/LegalPages/ComplaintsPolicy.jsx";
+import TermsAndConditions from "../Components/LegalPages/TermAndConditions.jsx";
+import PrivacyPolicy from "../Components/LegalPages/PrivacyPolicy.jsx";
+import LegalDisclaimer from "../Components/LegalPages/LegalDisclaimer.jsx";
+import DMCA from "../Components/LegalPages/DMCA.jsx";
 
 export default function Renderer() {
   const location = useLocation();
@@ -37,6 +42,12 @@ export default function Renderer() {
         <Route exact path="/signup_redirect" element={<SignupRedirect />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/forgetpassword" element={<ForgotPassword />} />
+        <Route exact path="/complaint-policy" element={<ComplainstsPolicy />} />
+        <Route exact path="/terms-policy" element={<TermsAndConditions />} />
+        <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route exact path="/legal-policy" element={<LegalDisclaimer />} />
+        <Route exact path="/dmca-policy" element={<DMCA />} />
+        
 
         <Route element={<PersistLogin />}>
           <Route exact path="/planchecker" element={<PlanChecker />} />

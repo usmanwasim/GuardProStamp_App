@@ -1,6 +1,9 @@
 import { Box, Container, Stack } from "@mui/material";
 import LOGO from "../assets/Images/Logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+// import { Box, Link as MuiLink } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Footer() {
   const location = useLocation();
@@ -32,11 +35,22 @@ export default function Footer() {
             />
             <Stack direction="row" sx={{ gap: 5, alignItems: "center" }}>
               <Box sx={{}}>
-                <Box sx={{ fontSize: "20px" }}>sales@guardprostamp.com</Box>
+                <Box >sales@guardprostamp.com</Box>
+
+
+
+
+            
                 {/* <Box sx={{ mt: 0.5 }}>
                   4 Peddlers Row Unit 299, Newark, DE 19702
                 </Box> */}
               </Box>
+
+              <Box>
+     
+    </Box>
+
+
               <Box
                 sx={{
                   textTransform: "capitalize",
