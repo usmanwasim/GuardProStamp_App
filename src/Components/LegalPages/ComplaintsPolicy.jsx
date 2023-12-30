@@ -14,11 +14,11 @@ export default function ComplainstsPolicy() {
     const containerStyles = {
         fontFamily: 'Montserrat',
         marginTop: '15px',
-        padding: '40px',
+        padding: '20px',
         background: '#f6f6f6',
         borderRadius: '10px',
         textAlign: isSmallScreen ? 'left' : 'justify',
-        fontSize: isSmallScreen ? '12px' : '16px',
+        fontSize: isSmallScreen ? '10px' : '16px',
     };
     const listItemStyle = {
         wordWrap: 'break-word',
@@ -34,7 +34,7 @@ export default function ComplainstsPolicy() {
                     <h1>COMPLAINTS POLICY</h1>
                 </div>
                 <div>
-                    <h2 style={{ fontSize: isSmallScreen ? '10px' : '16px', }}>Welcome to Guard ProStamp!</h2>
+                    <h2 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>Welcome to Guard ProStamp!</h2>
 
 
                     <Typography paragraph>
@@ -49,7 +49,7 @@ export default function ComplainstsPolicy() {
 
 
 
-                    <h3>1. HOW TO FILE A COMPLAINT</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>1. HOW TO FILE A COMPLAINT</h3>
                     <Typography paragraph>
 
 
@@ -62,7 +62,7 @@ export default function ComplainstsPolicy() {
 
 
 
-                    <h3>2. HOW WE WILL HANDLE CONTENT COMPLAINTS: </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>2. HOW WE WILL HANDLE CONTENT COMPLAINTS: </h3>
                     <Typography paragraph>
                         Upon receipt of your complaint in accordance with the preceding section:
                         <br />
@@ -88,61 +88,61 @@ export default function ComplainstsPolicy() {
 
 
 
-                    <h3>
-                    3. COPYRIGHT INFRINGEMENT COMPLAINTS
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>
+                        3. COPYRIGHT INFRINGEMENT COMPLAINTS
                     </h3>
 
 
 
                     <Typography component="div">
-                    Claims of copyright infringement must be filed in accordance with our DMCA notice and we will react to claims of copyright infringement in accordance with the guidelines in that notice.
+                        Claims of copyright infringement must be filed in accordance with our DMCA notice and we will react to claims of copyright infringement in accordance with the guidelines in that notice.
                         <br />
                         <br />
-                      
+
                     </Typography>
 
-                    <h3>4. HOW WE WILL HANDLE ADDITIONAL COMPLAINTS</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>4. HOW WE WILL HANDLE ADDITIONAL COMPLAINTS</h3>
                     <Typography component="div">
-                    Should additional concerns be received; we will follow the steps below:
-                    <ul>
+                        Should additional concerns be received; we will follow the steps below:
+                        <ul>
                             <li><span>a)    </span>We will take the actions we deem necessary to investigate your complaint in a timely manner and in accordance with its importance.
                             </li>
-                            <li><span>b)    </span>If we require additional information or documents, we will let you know. 
+                            <li><span>b)    </span>If we require additional information or documents, we will let you know.
                             </li>
-                            <li><span>c)    </span>We will act in good faith as we deem necessary to address the issue raised in your complaint. 
+                            <li><span>c)    </span>We will act in good faith as we deem necessary to address the issue raised in your complaint.
 
                             </li>
                             <li><span>d)    </span>We are not required to let you know how your report turned out.
 
                             </li>
-                            
+
                         </ul>
-                  
+
 
                     </Typography>
 
-                    <h3> 5. UNWARRANTED OR ABUSIVE COMPLAINTS </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}> 5. UNWARRANTED OR ABUSIVE COMPLAINTS </h3>
                     <Typography component="div">
 
-                    
-As a Guard ProStamp user, you represent and warrant that you will not submit any complaint that is entirely unwarranted, abusive, or submitted in bad faith under this complaints policy. We reserve the right to stop or delete your user account if we find that you have violated this warranty.
-                       
+
+                        As a Guard ProStamp user, you represent and warrant that you will not submit any complaint that is entirely unwarranted, abusive, or submitted in bad faith under this complaints policy. We reserve the right to stop or delete your user account if we find that you have violated this warranty.
+
 
                     </Typography>
 
 
-                   
 
 
 
-                    <h3>6. CONTACT INFORMATION </h3>
+
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>6. CONTACT INFORMATION </h3>
                     <Typography component="div" style={{ marginBottom: "50px" }}>
 
-                    If you have any questions or concerns about this complaint policy or wish to submit a complaint, please contact us using the details below:
+                        If you have any questions or concerns about this complaint policy or wish to submit a complaint, please contact us using the details below:
                         <br /><br />
                         Guard ProStamp Team
                         <br />
-                        <br />
+
                         <Link href="https://mail.google.com" underline="hover">
                             sales@guardprostamp.com
                         </Link>

@@ -13,12 +13,12 @@ export default function TermAndConditions() {
 
     const containerStyles = {
         fontFamily: 'Montserrat',
-        marginTop: '15px',
-        padding: '40px',
+        marginTop: '10px',
+        padding: '20px',
         background: '#f6f6f6',
         borderRadius: '10px',
         textAlign: isSmallScreen ? 'left' : 'justify',
-        fontSize: isSmallScreen ? '12px' : '16px',
+        fontSize: isSmallScreen ? '10px' : '16px',
     };
     const listItemStyle = {
         wordWrap: 'break-word',
@@ -30,12 +30,12 @@ export default function TermAndConditions() {
         <Container style={containerStyles}>
             
             <>
-                <div style={{ textAlign: "center ", marginTop: "15px", fontSize: isSmallScreen ? '10px' : '16px', }}>
+                <div style={{ textAlign: "center ", marginTop: "10px", fontSize: isSmallScreen ? '10px' : '16px', }}>
                     <h1>PRIVACY POLICY</h1>
                 </div>
                 <div>
-                    <h2 style={{ fontSize: isSmallScreen ? '10px' : '16px', }}>Welcome to Guard ProStamp!</h2>
-                    <Typography component="div">(Hereinafter referred to as "Guard ProStamp"). </Typography>
+                    <h2 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>Welcome to Guard ProStamp!</h2>
+                    <Typography component="div">(Hereinafter referred to as "Guard ProStamp Inc"). </Typography>
 
                     <Typography paragraph>
                         Guard ProStamp values your privacy and the protection of your personal data. This privacy policy describes what information we collect from you, how we collect it, how we use it, how we obtain your consent, how long we keep it in our databases and, if necessary, with whom we share it.
@@ -51,11 +51,11 @@ export default function TermAndConditions() {
 
 
 
-                    <h3>1. GENERAL INFORMATION</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>1. GENERAL INFORMATION</h3>
                     <Typography paragraph>
 
                         The personal data of users that are collected and processed through:                        <br />
-                        <ul style={{ fontWeight: 'bold' }}>
+                        <ul style={{ fontWeight: 'bold',fontSize: isSmallScreen ? '13px' : '16px' }}>
                             <li>
                                 Guard ProStamp mobile application (Available on Google Play and App Store).
 
@@ -66,19 +66,19 @@ export default function TermAndConditions() {
                             <li>(www.guardprostamp.com)</li>
                         </ul>
                         Will be under the responsibility and in charge of:
-                        <ul style={{ fontWeight: 'bold' }}>
+                        <ul style={{ fontWeight: 'bold' ,fontSize: isSmallScreen ? '13px' : '16px',}}>
                             <li>Guard ProStamp. </li>
                             <li>sales@guardprostamp.com
                             </li>
                         </ul>
                         <br />
-                        <br />
+                       
                     </Typography>
 
 
 
 
-                    <h3>2. HOW DO YOU OBTAIN MY CONSENT?</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>2. HOW DO YOU OBTAIN MY CONSENT?</h3>
                     <Typography paragraph>
                         By downloading and using the mobile application, using the web application, registering as a user (professionals and reviewers), using the functionalities available on the platform, contacting us through our contact information, and providing us with personal information to communicate with you, you consent to our collection, storage and use of your information on the terms contained in this privacy policy. You may withdraw your consent at any time by sending us your request through our contact information.
 
@@ -92,7 +92,7 @@ export default function TermAndConditions() {
 
 
 
-                    <h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>
                         3. TYPES OF INFORMATION COLLECTED
                     </h3>
 
@@ -184,7 +184,7 @@ export default function TermAndConditions() {
                         <br />
                     </Typography>
 
-                    <h3>4. HOW LONG WE KEEP YOUR DATA</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>4. HOW LONG WE KEEP YOUR DATA</h3>
                     <Typography component="div">
                         Personal data provided by users through the use of the platform will be retained for the time necessary to provide the functionalities available on the platform or until the user maintains the account on the platform or decides to close it or until Guard ProStamp closes and deletes the user's account or until the user requests the deletion of his or her data. Guard ProStamp may retain personal data for a longer period provided that the user has consented to such processing, as long as such consent is not withdrawn. In addition, Guard ProStamp may be obliged to retain personal data for a longer period provided that this is required for compliance with a legal obligation or by order of an authority. Once the retention period has expired, the personal data will be deleted. Therefore, the right of access, the right of deletion, the right of rectification and the right to data portability cannot be asserted after the retention period has expired.
                         <br />
@@ -192,7 +192,7 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3> 5. HOW WE USE YOUR INFORMATION. </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}> 5. HOW WE USE YOUR INFORMATION. </h3>
                     <Typography component="div">
 
                         In general, we use the information we collect primarily to provide, maintain, protect and improve our platform and our current services. We use personal information collected through our platform as described below:
@@ -217,7 +217,7 @@ export default function TermAndConditions() {
                     </Typography>
 
 
-                    <h3> 6. HOW WE SHARE INFORMATION</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}> 6. HOW WE SHARE INFORMATION</h3>
                     <Typography component="div">
 
                         Information about our customers is an important part of our business, and we are not in the business of selling it to others. We share customer information only as described below.
@@ -255,7 +255,7 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3> 7. PROTECTION OF YOUR INFORMATION </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}> 7. PROTECTION OF YOUR INFORMATION </h3>
                     <Typography component="div" >
 
                         We permit access to your personal information only to those persons who have a legitimate need to know such information and to those persons you have authorized to have access to such information. Guard ProStamp follows generally accepted industry standards to protect the personal information you provide to us. No method of transmission over the Internet, or method of electronic storage, is 100% secure. Therefore, while Guard ProStamp strives to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security. We will not sell, distribute or lease your personal information to third parties unless we have your permission or are required by law to do so.
@@ -264,7 +264,7 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3>8. RIGHTS </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>8. RIGHTS </h3>
                     <Typography component="div">
                         Users who provide information through our platform, as data subjects, have the right to access, rectify, download or delete their information, as well as to restrict and oppose certain processing of their information. While some of these rights apply generally, others only apply in certain limited circumstances. These rights are described below:
                         <ul>
@@ -312,13 +312,13 @@ export default function TermAndConditions() {
                         <br />
                     </Typography>
 
-                    <h3>9. PROTECTION OF CHILDREN'S ONLINE PRIVACY </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>9. PROTECTION OF CHILDREN'S ONLINE PRIVACY </h3>
                     <Typography component="div">
 
                         We comply with the requirements of national and international data protection regulations regarding the protection of personal data of minors. We do not collect any information from children under the age of 18. Our platform is intended for persons over 18 years of age. If we become aware that a minor has provided us with personal information, we will take the necessary steps to delete such information and terminate that person's account.
 
                     </Typography>
-                    <h3>    10. THIRD PARTIES</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>    10. THIRD PARTIES</h3>
                     <Typography component="div">
 
                     Except as expressly included in this privacy policy, this document addresses only the use and disclosure of information Guard ProStamp collects from you. If you disclose your information to others, whether other users or Guard ProStamp vendors, different rules may apply to their use or disclosure of the information you disclose to them. Guard ProStamp does not control the privacy policies of third parties, and you are subject to the privacy policies of those third parties where applicable. Guard ProStamp is not responsible for the privacy or security practices of other Internet platforms, including those linked to or from the Guard ProStamp platform. Guard ProStamp encourages you to ask questions before disclosing your personal information to others.
@@ -327,14 +327,13 @@ export default function TermAndConditions() {
                 
 
 
-                    <h3>11. CONTACT </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>11. CONTACT </h3>
                     <Typography component="div" style={{ marginBottom: "50px" }}>
 
                     If you have questions or concerns about this privacy policy and the treatment and security of your data, please contact us using the contact information below:
                         <br /><br />
-                        Guard ProStamp Team
-                        <br />
-                        <br />
+                        Guard ProStamp Team  
+                        <br/>
                         <Link href="https://mail.google.com" underline="hover">
                             sales@guardprostamp.com
                         </Link>

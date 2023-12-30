@@ -14,11 +14,11 @@ export default function LegalDisclaimer() {
     const containerStyles = {
         fontFamily: 'Montserrat',
         marginTop: '15px',
-        padding: '40px',
+        padding: '20px',
         background: '#f6f6f6',
         borderRadius: '10px',
         textAlign: isSmallScreen ? 'left' : 'justify',
-        fontSize: isSmallScreen ? '12px' : '16px',
+        fontSize: isSmallScreen ? '10px' : '16px',
     };
     const listItemStyle = {
         wordWrap: 'break-word',
@@ -34,13 +34,13 @@ export default function LegalDisclaimer() {
                     <h1>LEGAL DISCLAIMER</h1>
                 </div>
                 <div>
-                    <h2 style={{ fontSize: isSmallScreen ? '10px' : '16px', }}>Welcome to Guard ProStamp!</h2>
+                    <h2 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>Welcome to Guard ProStamp!</h2>
 
 
                     <Typography paragraph>
 
                     This disclaimer applies to all services and functionalities available through:
-                                            <ul style={{ fontWeight: 'bold' }}>
+                                            <ul style={{ fontWeight: 'bold',fontSize: isSmallScreen ? '13px' : '16px', }}>
                             <li>
                             Guard ProStamp Mobile Application (Available on Google Play and App Store).
 
@@ -50,7 +50,7 @@ export default function LegalDisclaimer() {
                             <li>Guard ProStamp Desktop Application</li>
                             <li>(www.guardprostamp.com)</li>
                         </ul>
-                        (Hereinafter referred to as “Guard ProStamp”). 
+                        (Hereinafter referred to as “Guard ProStamp lnc.”). 
                        
                         <br />
                         <br />
@@ -74,14 +74,14 @@ export default function LegalDisclaimer() {
 
 
 
-                    <h3>1. CONTACT INFORMATION </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>1. CONTACT INFORMATION </h3>
                     <Typography component="div" style={{ marginBottom: "50px" }}>
 
                         If you have any questions please contact us using the details below:
                         <br /><br />
                         Guard ProStamp Team
                         <br />
-                        <br />
+                        
                         <Link href="https://mail.google.com" underline="hover">
                             sales@guardprostamp.com
                         </Link>

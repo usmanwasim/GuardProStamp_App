@@ -14,11 +14,11 @@ export default function DMCA() {
     const containerStyles = {
         fontFamily: 'Montserrat',
         marginTop: '15px',
-        padding: '40px',
+        padding: '20px',
         background: '#f6f6f6',
         borderRadius: '10px',
         textAlign: isSmallScreen ? 'left' : 'justify',
-        fontSize: isSmallScreen ? '12px' : '16px',
+        fontSize: isSmallScreen ? '10px' : '16px',
     };
     const listItemStyle = {
         wordWrap: 'break-word',
@@ -34,7 +34,7 @@ export default function DMCA() {
                     <h1>COPYRIGHT INFRINGEMENT (DMCA)</h1>
                 </div>
                 <div>
-                    <h2 style={{ fontSize: isSmallScreen ? '10px' : '16px', }}>Welcome to Guard ProStamp!</h2>
+                    <h2 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>Welcome to Guard ProStamp!</h2>
 
 
                     <Typography paragraph>
@@ -45,7 +45,7 @@ export default function DMCA() {
 
 
 
-                    <h3>1. COPYRIGHT INFRINGEMENT</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>1. COPYRIGHT INFRINGEMENT</h3>
                     <Typography paragraph>
 
 
@@ -94,13 +94,13 @@ export default function DMCA() {
 
 
 
-                    <h3>2. CONTACT INFORMATION </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>2. CONTACT INFORMATION </h3>
                     <Typography component="div" style={{ marginBottom: "50px" }}>
 
                     If you have any questions please contact us through our contact information:                        <br /><br />
                         Guard ProStamp Team
                         <br />
-                        <br />
+                       
                         <Link href="https://mail.google.com" underline="hover">
                             sales@guardprostamp.com
                         </Link>

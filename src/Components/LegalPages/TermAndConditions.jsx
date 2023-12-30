@@ -14,11 +14,11 @@ export default function TermAndConditions() {
     const containerStyles = {
       fontFamily: 'Montserrat',
       marginTop: '15px',
-      padding: '40px',
+      padding: '20px',
       background: '#f6f6f6',
       borderRadius: '10px',
       textAlign: isSmallScreen ? 'left' : 'justify',
-      fontSize: isSmallScreen ? '12px' : '16px',
+      fontSize: isSmallScreen ? '10px' : '16px',
     };
     return (
         <Container style={containerStyles}>
@@ -27,21 +27,21 @@ export default function TermAndConditions() {
                     <h1>TERMS AND CONDITIONS</h1>
                 </div>
                 <div>
-                    <h2 style={{fontSize: isSmallScreen ? '10px' : '16px',}}>Welcome to Guard ProStamp!</h2>
+                    <h2 style={{fontSize: isSmallScreen ? '15px' : '16px',}}>Welcome to Guard ProStamp!</h2>
                     <Typography component="div">These are the terms and conditions for: </Typography>
                     <ul style={{fontWeight: 'bold'}}>
                         <li>
-                            <Typography style={{ marginLeft: "15px" }}>Guard ProStamp mobile application (Available on Google Play and App Store).
+                            <Typography style={{ marginLeft: "0px" }}>Guard ProStamp mobile application (Available on Google Play and App Store).
                             </Typography>
                         </li>
                         <li>
 
-                            <Typography style={{ marginLeft: "15px" }}>
+                            <Typography style={{ marginLeft: "0px" }}>
                                 Guard ProStamp Desktop Application
                             </Typography>
                         </li>
                         <li>
-                            <Typography style={{ marginLeft: "15px" }}>
+                            <Typography style={{ marginLeft: "0px" }}>
                                 (www.guardprostamp.com)
                             </Typography>
                         </li>
@@ -61,7 +61,7 @@ export default function TermAndConditions() {
                    
                    
 
-                    <h3>1. ACCEPTANCE OF TERMS</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>1. ACCEPTANCE OF TERMS</h3>
                     <Typography paragraph>
                       
                         By using the platform, you agree to be bound by this agreement. If you do not accept the terms of this agreement, you should not use the platform and discontinue use of the platform immediately. We may modify this agreement from time to time, and such modification shall be effective upon its posting on the platform. You agree to be bound by any modification to these terms and conditions when you use Guard ProStamp after any such modification is posted; it is therefore important that you review this agreement regularly.
@@ -84,8 +84,8 @@ export default function TermAndConditions() {
                    
                   
 
-                    <h3>2. PROFESSIONALS</h3>
-                    <h4>2.1 Registration</h4>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>2. PROFESSIONALS</h3>
+                    <h4 style={{ fontSize: isSmallScreen ? '14px' : '16px', }}>2.1 Registration</h4>
                     <Typography paragraph>
                         Professionals are those professionals such as professional architects, professional engineers and professional surveyors who register on the platform for the purpose of creating and uploading professional project information to the platform.
                         <br/>
@@ -115,7 +115,7 @@ export default function TermAndConditions() {
                     </Typography>
                    
               
-                    <h4>2.2. Subscriptions</h4>
+                    <h4 style={{ fontSize: isSmallScreen ? '14spx' : '16px', }}>2.2. Subscriptions</h4>
                     <Typography component="div">
                         To use the platform's functionalities and to create and provide project information that can be verified by
                         reviewers through the license number, professionals must purchase a subscription. When a user purchases a
@@ -142,7 +142,7 @@ export default function TermAndConditions() {
 
                         <br />
 
-                        <h4>2.3. Payments</h4>
+                        <h4 style={{ fontSize: isSmallScreen ? '14px' : '16px', }}>2.3. Payments</h4>
                         <Typography paragraph>
                             Subscriptions will be paid by the following payment methods:
                         </Typography>
@@ -189,11 +189,11 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>
                         3. REVIEWERS
                     </h3>
 
-                    <h4>3.1 Registration</h4>
+                    <h4 style={{ fontSize: isSmallScreen ? '14px' : '16px', }}>3.1 Registration</h4>
 
                     <Typography component="div">
                         Reviewers are those government workers who have a legitimate interest in verifying professionals' projects through the platform. Reviewers will be able to verify projects by providing the license number of the relevant professional. Registration and use of the platform by reviewers is free of charge.
@@ -214,7 +214,7 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3>4. USE OF THE PLATFORM</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>4. USE OF THE PLATFORM</h3>
                     <Typography component="div">
                         Guard ProStamp grants you a personal, worldwide, royalty-free, non-assignable and non-exclusive license to use the Guard ProStamp platform and downloadable through the App Store and Google Play services free of charge, including but not limited to modified versions, updates, upgrades, enhancements, improvements, additions, additions and copies, if any. This license is for the sole purpose of allowing you to use the features available on the platform in the manner permitted by these terms. You may not copy, modify, distribute, sell or lease any part of our platform or the included software, nor may you reverse engineer or attempt to extract the source code of such software, unless such restrictions are prohibited by law, or unless you have our written permission.
                         <br />
@@ -243,7 +243,7 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3> 5. COPYRIGHT</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}> 5. COPYRIGHT</h3>
                     <Typography component="div">
 
                         All materials on Guard ProStamp, including, without limitation, names, logos, trademarks, games, images, text, columns, graphics, videos, photographs, illustrations, software and other elements are protected by copyrights, trademarks and/or other intellectual property rights owned and controlled by Guard ProStamp or by third parties that have licensed or otherwise provided their material to the platform. You acknowledge and agree that all Materials on Guard ProStamp are made available for limited, non-commercial, personal use only. Except as specifically provided herein. No material may be copied, reproduced, republished, sold, downloaded, posted, transmitted, or distributed in any way, or otherwise used for any purpose, by any person or entity, without Guard ProStamp prior express written permission. You may not add, delete, distort, or otherwise modify the material. Any unauthorized attempt to modify any material, to defeat or circumvent any security features, or to utilize Guard ProStamp or any part of the material for any purpose other than its intended purposes is strictly prohibited.
@@ -251,7 +251,7 @@ export default function TermAndConditions() {
                     </Typography>
 
 
-                    <h3> 6. PROHIBITED ACTIVITIES</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}> 6. PROHIBITED ACTIVITIES</h3>
                     <Typography component="div">
 
                         The content and information available on the platform (including, but not limited to, data, information, text, music, sound, photos, graphics, video, maps, icons or other material), as well as the infrastructure used to provide such content and information, is proprietary to Guard ProStamp or licensed to the Guard ProStamp by third parties. For all content other than your content, you agree not to otherwise modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, transfer, or sell or re-sell any information, software or services obtained from or through the platform. In addition, the following activities are prohibited:
@@ -283,7 +283,7 @@ export default function TermAndConditions() {
                         </ul>
                     </Typography>
 
-                    <h3>7. DISCLAIMER OF WARRANTIES </h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>7. DISCLAIMER OF WARRANTIES </h3>
                     <Typography component="div" >
                         Because of the nature of the Internet Guard ProStamp provides and maintains the platform on an "as is", "as available" basis and makes no promise that use of the platform will be uninterrupted or entirely error free. We are not responsible to you if we are unable to provide our Internet services for any reason beyond our control.
                         <br />
@@ -326,7 +326,7 @@ export default function TermAndConditions() {
 
                     </Typography>
 
-                    <h3>8. INDEMNIFICATION</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>8. INDEMNIFICATION</h3>
                     <Typography component="div">
                         You agree to defend and indemnify Guard ProStamp from and against any claims, causes of action, demands, recoveries, losses, damages, fines, penalties or other costs or expenses of any kind or nature including but not limited to reasonable legal and accounting fees, brought by third parties as a result of:
                         <ul>
@@ -348,18 +348,18 @@ export default function TermAndConditions() {
                         </ul>
                     </Typography>
 
-                    <h3>9. CHANGES AND TERMINATION</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>9. CHANGES AND TERMINATION</h3>
                     <Typography component="div">
                         We may change the platform and these terms at any time, in our sole discretion and without notice to you. You are responsible for remaining knowledgeable about these terms. Your continued use of the platform constitutes your acceptance of any changes to these terms and any changes will supersede all previous versions of the terms. Unless otherwise specified herein, all changes to these terms apply to all users take effect. Furthermore, we may terminate this agreement with you under these terms at any time by notifying you in writing (including by email) or without any warning.
 
                     </Typography>
-                    <h3>   10. INTEGRATION CLAUSE</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '13px' : '16px', }}>   10. INTEGRATION CLAUSE</h3>
                     <Typography component="div">
 
                         This agreement together with the privacy policy and any other legal notices published by Guard ProStamp, shall constitute the entire agreement between you and Guard ProStamp concerning and governs your use of the platform.
                     </Typography>
 
-                    <h3>   11. DISPUTES</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '13px' : '16px', }}>   11. DISPUTES</h3>
                     <Typography component="div">
 
                         The user agrees that any dispute, claim or controversy arising out of or relating to these terms and conditions, or the breach, termination, enforcement, interpretation or validity thereof or the use of the platform, shall be resolved by binding arbitration between the user and Guard ProStamp, provided that each party retains the right to bring an individual action in a court of competent jurisdiction.
@@ -374,7 +374,7 @@ export default function TermAndConditions() {
                         The courts of the United States, specifically the courts located in the State of Delaware, shall have jurisdiction over any dispute, controversy or claim relating to Guard ProStamp and its business operations. Any such dispute or controversy shall be brought and resolved in the courts of the United States, specifically the courts located in the State of Delaware.
                     </Typography>
 
-                    <h3>12. FINAL PROVISIONS</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>12. FINAL PROVISIONS</h3>
                     <Typography component="div">
 
 
@@ -389,14 +389,15 @@ export default function TermAndConditions() {
                     </Typography>
 
 
-                    <h3>13. CONTACT INFORMATION</h3>
+                    <h3 style={{ fontSize: isSmallScreen ? '15px' : '16px', }}>13. CONTACT INFORMATION</h3>
                     <Typography component="div"  style={{marginBottom:"50px"}}>
 
                         If you have questions or concerns about these terms, please contact us using the contact information below:
-                        <br /><br />
+                        <br />
+                        <br />
                         Guard ProStamp Team
                         <br />
-                        <br />
+                       
                         <Link href="https://mail.google.com" underline="hover">
                             sales@guardprostamp.com
                         </Link>
