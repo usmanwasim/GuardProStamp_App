@@ -33,7 +33,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   const [licenseDetail, setLicenseDetail] = useState({});
   const [projectsOfLicense, setProjectsOfLicense] = useState();
   // Select states
-  const [states, setStates] = useState([]);
+  const [states, setStates] = useState("Null");
   const [citys, setCitys] = useState([]);
   const [categories, setCategories] = useState([]);
   const [cityIndex, setCityIndex] = useState("");
@@ -53,15 +53,43 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
     category: "",
     license: "",
   });
+  
+
+  const storedUserData = localStorage.getItem("userData");
+  
+const userData = JSON.parse(storedUserData);
+const id = userData?.id;
+  // const id="65932eb62b9f5341c23a7406";
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`https://guardprostamp-8ab14143efd0.herokuapp.com/users/syncUser/${id}`);
+        console.log("User Fetch Successfully ", response?.data?.data);
+        setData({ ...data, state: response?.data?.data?.state });
+        setStates(response?.data?.data?.state);
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    };
+  
+    fetchUserData();
+  }, [id]);
+  
+  // Log the state when 'data' changes
+  useEffect(() => {
+    console.log("After setting ", data);
+  }, [data]);
+  
 
   // get states
-  useEffect(() => {
-    const getStatesForPlanChecker = async () => {
-      let response = await axios.get(`${import.meta.env.VITE_BASE_URL}states`);
-      setStates(response?.data?.data);
-    };
-    getStatesForPlanChecker();
-  }, []);
+  // useEffect(() => {
+  //   const getStatesForPlanChecker = async () => {
+  //     let response = await axios.get(`${import.meta.env.VITE_BASE_URL}states`);
+  //     setStates(response?.data?.data);
+  //   };
+  //   getStatesForPlanChecker();
+  // }, []);
   // get boards
   useEffect(() => {
     const getcirtyForPlanChecker = async () => {
@@ -532,7 +560,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                     borderRadius: "15px",
                     border: "1px solid #E6E6E6",
                     background: "#FFF",
-                    color: "#1C274C",
+                    color: "grey",
                     p: { xs: 1, sm: 1.5 },
                     fontSize: { xs: "12px", sm: "14px", md: "16px" },
                     "& .MuiSelect-icon": {
@@ -558,14 +586,15 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
                     />
                   }
                 >
-                  <MenuItem value="" disabled>
-                    Select State
-                  </MenuItem>
-                  {states.map((item, i) => (
-                    <MenuItem key={i} value={item?.state}>
-                      {item?.state}
+                  
+                  
+                    <MenuItem value="" disabled>
+                      Your State
                     </MenuItem>
-                  ))}
+                    <MenuItem value={data.state}>
+                      {data.state}
+                    </MenuItem>
+              
                 </Select>
               </Box>
               <Box sx={{ width: "100%" }}>

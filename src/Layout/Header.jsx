@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { PersonRounded, MenuOutlined } from "@mui/icons-material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link,useLocation, useNavigate } from "react-router-dom";
 
 import LOGO from "../assets/Images/Logo.png";
 
@@ -21,17 +21,45 @@ export default function Header() {
   const [state, setState] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  // const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  // const handlePopoverOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
+  const getProfileLink = () => {
+    switch (location.pathname) {
+      case '/':
+        return '/adminpage';
+      case '/adminpage':
+        return '/'; // You can replace this with the actual path for Plan Checker
+      default:
+        return '/';
+    }
+  };
+  const hoverStatus = () => {
+    if(location.pathname==="/"){
+      return "admin"
+    } else{
+      return "Plan Checker"
+    }
+  }
+  // const getTitleText = () => {
+  //   if (location.pathname === "/") {
+  //     return "Admin";
+  //   } else if (location.pathname === "/adminpage") {
+  //     return "Plan Checker";
+  //   }
+  //   return "";
   // };
 
-  // const handlePopoverClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-  // const open = Boolean(anchorEl);
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
+  
   // const togglePage = () => {
   //   if (location.pathname === "/") {
   //     navigate("/adminpage");
@@ -156,20 +184,22 @@ export default function Header() {
                 Contact Us
               </Button>
 
-              <PersonRounded
-                aria-owns={open ? "mouse-over-popover" : undefined}
-                aria-haspopup="true"
-                // onMouseEnter={handlePopoverOpen}
-                // onMouseLeave={handlePopoverClose}
-                sx={{
-                  color: "#3821A5",
-                  cursor: "pointer",
-                }}
-                // onClick={() => {
-                //   togglePage();
-                // }}
-              />
-              {/* {["/", "/adminpage"].includes(location.pathname) && (
+              
+                <Link to={getProfileLink()} sx={{ textDecoration: 'none' }}>
+                  <PersonRounded
+                    aria-owns={open ? "mouse-over-popover" : undefined}
+                    aria-haspopup="true"
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
+                    sx={{
+                      color: "#3821A5",
+                      cursor: "pointer",
+                    }}
+                    // title={getTitleText()}
+                  />
+                </Link>
+            
+              
                 <Popover
                   id="mouse-over-popover"
                   sx={{
@@ -189,11 +219,10 @@ export default function Header() {
                   disableRestoreFocus
                 >
                   <Typography sx={{ p: "2px 5px" }}>
-                    {(location.pathname === "/" && "Admin") ||
-                      (location.pathname === "/adminpage" && "Plan Checker")}
+                   {hoverStatus()}
                   </Typography>
                 </Popover>
-              )} */}
+             
             </Stack>
           </Hidden>
           <Hidden mdUp>

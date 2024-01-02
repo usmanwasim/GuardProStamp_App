@@ -319,7 +319,7 @@ export default function Signup() {
                     }
                   >
                     <MenuItem value="" disabled>
-                      Enter your state
+                      Enter Your State
                     </MenuItem>
                     {states.map((item, i) => (
                       <MenuItem key={i} value={item.stateName}>
@@ -371,7 +371,7 @@ export default function Signup() {
                     }
                   >
                     <MenuItem value="" disabled>
-                      Enter your city
+                      Enter Your City
                     </MenuItem>
                     {citys?.map((option, i) => (
                       <MenuItem key={i} value={option}>
@@ -495,7 +495,7 @@ export default function Signup() {
                   </InputLabel>
                   <InputBase
                     id="agency"
-                    placeholder="Enter your agency"
+                    placeholder="Enter Your Agency"
                     value={data.agency}
                     onChange={(e) =>
                       setData({ ...data, agency: e.target.value })
@@ -528,7 +528,7 @@ export default function Signup() {
                   </InputLabel>
                   <InputBase
                     id="department"
-                    placeholder="Enter your department"
+                    placeholder="Enter Your Department"
                     value={data.department}
                     onChange={(e) =>
                       setData({ ...data, department: e.target.value })
@@ -570,7 +570,7 @@ export default function Signup() {
                   </InputLabel>
                   <InputBase
                     id="name"
-                    placeholder="Enter your name"
+                    placeholder="Enter Your Name"
                     value={data.name}
                     onChange={(e) => setData({ ...data, name: e.target.value })}
                     sx={{
@@ -601,7 +601,7 @@ export default function Signup() {
                   </InputLabel>
                   <InputBase
                     id="email"
-                    placeholder="Enter your email"
+                    placeholder="Enter Your Email"
                     value={data.email}
                     onChange={(e) =>
                       setData({ ...data, email: e.target.value })
@@ -642,7 +642,7 @@ export default function Signup() {
                   </InputLabel>
                   <InputBase
                     id="password"
-                    placeholder="Enter your password"
+                    placeholder="Enter Your Password"
                     value={data.password}
                     onChange={(e) =>
                       setData({ ...data, password: e.target.value })
