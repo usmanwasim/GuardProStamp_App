@@ -33,7 +33,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   const [licenseDetail, setLicenseDetail] = useState({});
   const [projectsOfLicense, setProjectsOfLicense] = useState();
   // Select states
-  const [states, setStates] = useState("Null");
+  const [states, setStates] = useState([]);
   const [citys, setCitys] = useState([]);
   const [categories, setCategories] = useState([]);
   const [cityIndex, setCityIndex] = useState("");
@@ -53,43 +53,41 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
     category: "",
     license: "",
   });
-  
+
+
 
   const storedUserData = localStorage.getItem("userData");
-  
-const userData = JSON.parse(storedUserData);
-const id = userData?.id;
-  // const id="65932eb62b9f5341c23a7406";
+
+  const userData = JSON.parse(storedUserData);
+  const id = userData?.id;
+  // const id = "65956a58c4a44644a8932f1f";
+  // const dummyState = "Hawaii";
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`https://guardprostamp-8ab14143efd0.herokuapp.com/users/syncUser/${id}`);
         console.log("User Fetch Successfully ", response?.data?.data);
+        // setData({ ...data, state: dummyState });
         setData({ ...data, state: response?.data?.data?.state });
         setStates(response?.data?.data?.state);
       } catch (error) {
         console.error("Error fetching user data", error);
       }
     };
-  
+
     fetchUserData();
   }, [id]);
-  
-  // Log the state when 'data' changes
-  useEffect(() => {
-    console.log("After setting ", data);
-  }, [data]);
-  
 
   // get states
-  // useEffect(() => {
-  //   const getStatesForPlanChecker = async () => {
-  //     let response = await axios.get(`${import.meta.env.VITE_BASE_URL}states`);
-  //     setStates(response?.data?.data);
-  //   };
-  //   getStatesForPlanChecker();
-  // }, []);
+  useEffect(() => {
+    const getStatesForPlanChecker = async () => {
+      let response = await axios.get(`${import.meta.env.VITE_BASE_URL}states`);
+      // setStates(response?.data?.data);
+      // console.log("the data for state is ",response?.data?.data);
+    };
+    getStatesForPlanChecker();
+  }, []);
   // get boards
   useEffect(() => {
     const getcirtyForPlanChecker = async () => {
@@ -104,8 +102,7 @@ const id = userData?.id;
   useEffect(() => {
     const getcirtyForPlanChecker = async () => {
       let response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}categories?state=${
-          data.state
+        `${import.meta.env.VITE_BASE_URL}categories?state=${data.state
         }&boardIndex=${cityIndex}`
       );
       setCategories(response?.data?.data);
@@ -586,15 +583,20 @@ const id = userData?.id;
                     />
                   }
                 >
-                  
-                  
-                    <MenuItem value="" disabled>
-                      Your State
-                    </MenuItem>
+                  <MenuItem value="" disabled>
+                    Your State
+                  </MenuItem>
+
+                  {data.state ? (
                     <MenuItem value={data.state}>
                       {data.state}
                     </MenuItem>
-              
+                  ) : (
+                    <MenuItem disabled>
+                      There Is No State
+                    </MenuItem>
+                  )}
+
                 </Select>
               </Box>
               <Box sx={{ width: "100%" }}>
@@ -643,6 +645,7 @@ const id = userData?.id;
                     Select the Professional Board
                   </MenuItem>
                   {citys?.map((option, i) => (
+                    
                     <MenuItem
                       key={i}
                       value={option}
@@ -651,6 +654,7 @@ const id = userData?.id;
                       {option}
                     </MenuItem>
                   ))}
+                  
                 </Select>
               </Box>
             </Stack>
@@ -713,6 +717,7 @@ const id = userData?.id;
                       {option}
                     </MenuItem>
                   ))}
+                   
                 </Select>
               </Box>
               <Box sx={{ width: "100%" }}>
