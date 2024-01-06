@@ -44,6 +44,8 @@ export default function Signup() {
     agency: "",
     department: "",
     name: "",
+    middleName:"",
+    lastName:"",
     email: "",
     password: "",
     cpassword: "",

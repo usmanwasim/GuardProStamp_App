@@ -65,7 +65,7 @@ export default function PlanTab2({
       // console.log(data, "chat list");
       setChatList(data);
     });
-  }, [!chatList]);
+  }, [chatList]);
 
   // get active chat detail
   useEffect(() => {
@@ -99,6 +99,7 @@ export default function PlanTab2({
   };
 
   useEffect(() => {
+    console.log("fgfgf", "socket called")
     Socket.on("receive-message", (data) => {
       let userDetail = data.members.filter(
         (item) => item?.userId !== userData?.id
@@ -106,6 +107,7 @@ export default function PlanTab2({
       let messages = data.messages;
       setActiveChatDetail({ receiver: userDetail[0], messages });
     });
+
   }, [Socket]);
 
   useEffect(() => {
@@ -134,7 +136,7 @@ export default function PlanTab2({
           >
             <ArrowBackRounded
               sx={{ mb: { xs: 1, sm: 2 }, cursor: "pointer" }}
-              // onClick={() => setState(false)}
+            // onClick={() => setState(false)}
             />
             <Box
               sx={{
@@ -353,7 +355,7 @@ export default function PlanTab2({
                                 maxWidth: "60%",
                                 ml:
                                   item?.sender !==
-                                  ActiveChatDetail?.receiver?.userId
+                                    ActiveChatDetail?.receiver?.userId
                                     ? "auto"
                                     : "0px",
                               }}
@@ -369,7 +371,7 @@ export default function PlanTab2({
                                   display: "flex",
                                   flexDirection:
                                     item?.sender ===
-                                    ActiveChatDetail?.receiver?.userId
+                                      ActiveChatDetail?.receiver?.userId
                                       ? "row"
                                       : "row-reverse",
                                   justifyContent: "end",
@@ -381,7 +383,7 @@ export default function PlanTab2({
                                 <Avatar
                                   src={
                                     item?.sender ===
-                                    ActiveChatDetail?.receiver?.userId
+                                      ActiveChatDetail?.receiver?.userId
                                       ? avatar1
                                       : avatar2
                                   }
@@ -392,7 +394,7 @@ export default function PlanTab2({
                                     display: "flex",
                                     flexDirection:
                                       item?.sender ===
-                                      ActiveChatDetail?.receiver?.userId
+                                        ActiveChatDetail?.receiver?.userId
                                         ? "row"
                                         : "row-reverse",
                                     alignItems: "center",
@@ -410,7 +412,7 @@ export default function PlanTab2({
                                 >
                                   <span id="name">
                                     {item?.sender ===
-                                    ActiveChatDetail?.receiver?.userId
+                                      ActiveChatDetail?.receiver?.userId
                                       ? ActiveChatDetail?.receiver?.name
                                       : "You"}
                                   </span>

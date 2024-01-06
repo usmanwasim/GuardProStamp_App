@@ -54,22 +54,23 @@ export default function AccountsDetails() {
 
   // filter for search
   useEffect(() => {
-    if (search) {
-      setPlanCheckerdata1(
-        planCheckerdata.filter((item) =>
-          item?.name?.toLowerCase().includes(search.toLowerCase())
-        )
-      );
-      setLicenseAccountData1(
-        licenseAccountData.filter((item) =>
-          item?.name?.toLowerCase().includes(search.toLowerCase())
-        )
-      );
-    } else {
-      setPlanCheckerdata1(planCheckerdata);
-      setLicenseAccountData1(licenseAccountData);
-    }
+    setPlanCheckerdata1(
+      planCheckerdata.filter((item) =>
+        item?.name?.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+    setLicenseAccountData1(
+      licenseAccountData.filter((item) =>
+        item?.name?.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+
   }, [search]);
+  useEffect(() => {
+    setPlanCheckerdata1(planCheckerdata);
+    setLicenseAccountData1(licenseAccountData);
+
+  }, [planCheckerdata,licenseAccountData])
 
   // Tabs state
   const [value, setValue] = useState(0);
@@ -125,7 +126,7 @@ export default function AccountsDetails() {
           TabIndicatorProps={{ sx: { display: "none" } }}
           textColor="inherit"
         >
-          {["Licensee Account", "Plan Checker"].map((text, i) => (
+          {["License Account", "Plan Checker"].map((text, i) => (
             <Tab
               key={i}
               label={
@@ -133,7 +134,7 @@ export default function AccountsDetails() {
                   sx={{
                     whiteSpace: "noWrap",
                     color: "#000",
-                    fontFamily: "Poppins",
+                    fontFamily: "",
                     fontSize: { xs: "12px", sm: "15px", md: "18px" },
                     fontStyle: "normal",
                     fontWeight: "600",
@@ -197,14 +198,14 @@ export default function AccountsDetails() {
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <PlanCheckerDetail
+        {planCheckerdata1 && <PlanCheckerDetail
           data={planCheckerdata1}
           setAdd={setAdd1}
           setEdit={setEdit}
           setDel={setDel}
           setDelData={setDelData}
           setEditData={setEditData}
-        />
+        />}
       </CustomTabPanel>
     </Box>
   );
