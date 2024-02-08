@@ -37,7 +37,7 @@ export default function Renderer() {
       )}
       <Routes>
         <Route exact path="/" element={<Desktop2 />} />
-        <Route exact path="/adminpage" element={<AdminDesktop2 />} />
+        <Route exact path="/admin-login" element={<AdminDesktop2 />} />
         <Route exact path="/loginpage" element={<Desktop1 />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signup_redirect" element={<SignupRedirect />} />
@@ -58,7 +58,7 @@ export default function Renderer() {
           </Route>
         </Route>
       </Routes>
-      {["/", "/adminpage"].includes(location.pathname) && <Footer />}
+      {["/", "/admin-login"].includes(location.pathname) && <Footer />}
     </>
   );
 }

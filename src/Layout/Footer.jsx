@@ -11,8 +11,8 @@ export default function Footer() {
 
   const togglePage = () => {
     if (location.pathname === "/") {
-      navigate("/adminpage");
-    } else if (location.pathname === "/adminpage") {
+      navigate("/admin-login");
+    } else if (location.pathname === "/admin-login") {
       navigate("/");
     }
   };
@@ -51,7 +51,7 @@ export default function Footer() {
     </Box>
 
 
-              <Box
+              {/* <Box
                 sx={{
                   textTransform: "capitalize",
                   background: "#3B17AD",
@@ -74,8 +74,8 @@ export default function Footer() {
                 }}
               >
                 {(location.pathname === "/" && "Admin") ||
-                  (location.pathname === "/adminpage" && "Plan Checker")}
-              </Box>
+                  (location.pathname === "/admin-login" && "Plan Checker")}
+              </Box> */}
             </Stack>
           </Stack>
           <Box

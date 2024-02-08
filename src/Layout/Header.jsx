@@ -26,8 +26,8 @@ export default function Header() {
   const getProfileLink = () => {
     switch (location.pathname) {
       case '/':
-        return '/adminpage';
-      case '/adminpage':
+        return '/admin-login';
+      case '/admin-login':
         return '/'; // You can replace this with the actual path for Plan Checker
       default:
         return '/';
@@ -43,7 +43,7 @@ export default function Header() {
   // const getTitleText = () => {
   //   if (location.pathname === "/") {
   //     return "Admin";
-  //   } else if (location.pathname === "/adminpage") {
+  //   } else if (location.pathname === "/admin-login") {
   //     return "Plan Checker";
   //   }
   //   return "";
@@ -62,8 +62,8 @@ export default function Header() {
   
   // const togglePage = () => {
   //   if (location.pathname === "/") {
-  //     navigate("/adminpage");
-  //   } else if (location.pathname === "/adminpage") {
+  //     navigate("/admin-login");
+  //   } else if (location.pathname === "/admin-login") {
   //     navigate("/");
   //   }
   // };

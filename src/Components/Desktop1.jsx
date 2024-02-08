@@ -7,7 +7,7 @@ export default function Desktop1() {
   const navigate = useNavigate();
   const location = useLocation();
   const getTitleText = () => {
- return  ( location.state.history === "/adminpage"
+ return  ( location.state.history === "/admin-login"
                 ? "Admin Login"
                 : "Plan Checker User")
   };
@@ -51,7 +51,7 @@ export default function Desktop1() {
           <Box
             component={"img"}
             src={
-              location.state.history === "/adminpage"
+              location.state.history === "/admin-login"
                 ? adminloginimg
                 : checkerloginimg
             }
