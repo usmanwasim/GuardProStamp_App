@@ -46,6 +46,7 @@ export default function LicenseInformationModal({ open, setOpen, id }) {
   useEffect(() => {
     handleLicenseInfo();
   }, [id]);
+  
   return (
     <>
       <LicenseLinkModal
@@ -78,7 +79,6 @@ export default function LicenseInformationModal({ open, setOpen, id }) {
             cursor: "pointer",
           }}
           onClick={() => {
-            setData([]);
             setOpen(false);
           }}
         >

@@ -28,6 +28,7 @@ export default function LicenseAccountDetail({
   const [licenseInfo, setLicenseInfo] = useState(false);
   const [licenseID, setLicenseID] = useState("");
 
+
   return (
     <>
       <LicenseInformationModal
@@ -220,3 +221,4 @@ LicenseAccountDetail.propTypes = {
   setDelData: PropTypes.func,
   setEditData: PropTypes.func,
 };
+

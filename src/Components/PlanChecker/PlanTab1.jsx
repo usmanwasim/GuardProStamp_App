@@ -39,6 +39,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   // Select states
   const [states, setStates] = useState([]);
   const [citys, setCitys] = useState([]);
+  const [projectCity, setProjectCity] = useState();
   const [categories, setCategories] = useState([]);
   const [cityIndex, setCityIndex] = useState("");
   const [responseMsg, setResponseMsg] = useState({
@@ -71,7 +72,9 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
         const response = await axios.get(
           `https://guardprostamp-8ab14143efd0.herokuapp.com/users/syncUser/${id}`
         );
-        // console.log("User Fetch Successfully ", response?.data?.data);
+        console.log("User Fetch Successfully...... ", response?.data?.data);
+        setProjectCity(response?.data?.data?.city);
+        console.log("City is ", projectCity)
         const subscriptionMeta = response?.data?.data?.subscriptionMeta;
         setSubscriptionStatus(subscriptionMeta?.subscribed);
         // console.log("the metadata is", subscriptionStatus);
@@ -109,8 +112,7 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
   useEffect(() => {
     const getcirtyForPlanChecker = async () => {
       let response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}categories?state=${
-          data.state
+        `${import.meta.env.VITE_BASE_URL}categories?state=${data.state
         }&boardIndex=${cityIndex}`
       );
       setCategories(response?.data?.data);
@@ -168,13 +170,15 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
           }
         );
         setLicenseDetail(licenseRecords?.data?.data);
+        const _id = licenseRecords?.data?.data?.userId;
+        console.log("The License User id ", _id)
         // fetch user subscription status
         const response = await axios.get(
-          `https://guardprostamp-8ab14143efd0.herokuapp.com/users/syncUser/${licenseRecords?.data?.data?.userId}`
+          `https://guardprostamp-8ab14143efd0.herokuapp.com/users/syncUser/${_id}`
         );
         console.log(
           "User Fetch Successfully ",
-          response?.data?.data?.subscriptionMeta?.subscribed
+          response
         );
         if (response?.data?.data?.subscriptionMeta?.subscribed) {
           setData({
@@ -354,173 +358,175 @@ export default function PlanTab1({ setValue, setTab2State, setactiveChatID }) {
             gap={{ xs: 2, sm: 3.5, md: 5 }}
             sx={{ my: { xs: 2, sm: 3, md: 4 } }}
           >
-            {projectsOfLicense?.map((item, i) => (
-              <Box
-                key={i}
-                sx={{
-                  borderRadius: "12.807px",
-                  border: "0.854px solid #E6E6E6",
-                  background: "#FFF",
-                  overflow: "hidden",
-                }}
-              >
-                {/* blue head */}
+            {projectsOfLicense
+              ?.filter(project => project.projectCityName === projectCity)
+              .map((item, i) => (
                 <Box
+                  key={i}
                   sx={{
-                    background: "#3B17AD",
-                    px: { xs: 2, sm: 3.5, md: 5 },
-                    py: { xs: 1, sm: 2 },
+                    borderRadius: "12.807px",
+                    border: "0.854px solid #E6E6E6",
+                    background: "#FFF",
+                    overflow: "hidden",
                   }}
                 >
+                  {/* blue head */}
                   <Box
                     sx={{
-                      color: "#FFF",
-                      textAlign: "right",
-                      fontFamily: "Poppins",
-                      fontSize: { xs: "11px", sm: "13px" },
-                      fontStyle: "normal",
-                      fontWeight: "400",
-                      lineHeight: "normal",
-                    }}
-                  >
-                    Owner: {item?.projectOwnerName}
-                  </Box>
-                  <Box
-                    sx={{
-                      color: "#FFF",
-                      textAlign: "right",
-                      fontFamily: "Poppins",
-                      fontSize: { xs: "11px", sm: "13px" },
-                      fontStyle: "normal",
-                      fontWeight: "400",
-                      lineHeight: "normal",
-                    }}
-                  >
-                    Date: {item?.projectDate}
-                  </Box>
-                </Box>
-                {/* project Detail */}
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  sx={{
-                    justifyContent: "space-between",
-                    px: { xs: 2, sm: 3.5, md: 5 },
-                    py: { xs: 1, sm: 2 },
-                    borderBottom: "1px solid #E6E6E6",
-                  }}
-                >
-                  <Box>
-                    <Box
-                      sx={{
-                        color: "#1C274C",
-                        fontFamily: "Poppins",
-                        fontSize: { xs: "14", sm: "17px", md: "20px" },
-                        fontStyle: "normal",
-                        fontWeight: "700",
-                        lineHeight: "normal",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <img
-                        src={Notes}
-                        alt=""
-                        style={{ width: "20px", margin: "0px 5px 0px 0px" }}
-                      />
-                      {item?.projectName ? item?.projectName : "Project Name"}
-                    </Box>
-                    <Box
-                      sx={{
-                        color: "#1C274C",
-                        fontFamily: "Poppins",
-                        fontSize: { xs: "11", sm: "13px", md: "15px" },
-                        fontStyle: "normal",
-                        fontWeight: "700",
-                        lineHeight: "normal",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <img
-                        src={LocationImg}
-                        alt=""
-                        style={{ width: "18px", margin: "0px 5px 0px 0px" }}
-                      />
-                      {item?.projectCityName ? item?.projectCityName : "City"},
-                      {item?.projectStateName
-                        ? item?.projectStateName
-                        : "State"}
-                    </Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      width: "max-content",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Box sx={{ mb: "5px" }}>status</Box>
-                    <Button
-                      size="small"
-                      sx={{
-                        borderRadius: "8.538px",
-                        background: "#00B26A",
-                        border: "1px solid #00B26A",
-                        px: { xs: 1, sm: 2 },
-                        py: { xs: "5px", sm: "7px" },
-                        color: "#FFF",
-                        fontFamily: "Poppins",
-                        fontSize: { xs: "10px", sm: "12px" },
-                        fontStyle: "normal",
-                        fontWeight: "500",
-                        lineHeight: "normal",
-                        "&:hover": {
-                          background: "transparent",
-                          color: "#00B26A",
-                        },
-                      }}
-                      disabled={item?.status === true ? true : false}
-                      onClick={() => {
-                        updateProjectStatus(item?._id);
-                      }}
-                    >
-                      {item?.status === true ? "Confirmed" : "Confirm"}
-                    </Button>
-                  </Box>
-                </Stack>
-                {/* verify button */}
-                {item?.status === true && (
-                  <Box
-                    sx={{
+                      background: "#3B17AD",
                       px: { xs: 2, sm: 3.5, md: 5 },
                       py: { xs: 1, sm: 2 },
                     }}
                   >
                     <Box
                       sx={{
-                        borderRadius: "8.538px",
-                        background: "#3790FF",
                         color: "#FFF",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: { xs: 0.4, sm: 0.7 },
+                        textAlign: "right",
                         fontFamily: "Poppins",
-                        fontSize: { xs: "12px", sm: "15px" },
+                        fontSize: { xs: "11px", sm: "13px" },
                         fontStyle: "normal",
-                        fontWeight: "600",
+                        fontWeight: "400",
                         lineHeight: "normal",
+                      }}
+                    >
+                      Owner: {item?.projectOwnerName}
+                    </Box>
+                    <Box
+                      sx={{
+                        color: "#FFF",
+                        textAlign: "right",
+                        fontFamily: "Poppins",
+                        fontSize: { xs: "11px", sm: "13px" },
+                        fontStyle: "normal",
+                        fontWeight: "400",
+                        lineHeight: "normal",
+                      }}
+                    >
+                      Date: {item?.projectDate}
+                    </Box>
+                  </Box>
+                  {/* project Detail */}
+                  <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    sx={{
+                      justifyContent: "space-between",
+                      px: { xs: 2, sm: 3.5, md: 5 },
+                      py: { xs: 1, sm: 2 },
+                      borderBottom: "1px solid #E6E6E6",
+                    }}
+                  >
+                    <Box>
+                      <Box
+                        sx={{
+                          color: "#1C274C",
+                          fontFamily: "Poppins",
+                          fontSize: { xs: "14", sm: "17px", md: "20px" },
+                          fontStyle: "normal",
+                          fontWeight: "700",
+                          lineHeight: "normal",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={Notes}
+                          alt=""
+                          style={{ width: "20px", margin: "0px 5px 0px 0px" }}
+                        />
+                        {item?.projectName ? item?.projectName : "Project Name"}
+                      </Box>
+                      <Box
+                        sx={{
+                          color: "#1C274C",
+                          fontFamily: "Poppins",
+                          fontSize: { xs: "11", sm: "13px", md: "15px" },
+                          fontStyle: "normal",
+                          fontWeight: "700",
+                          lineHeight: "normal",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={LocationImg}
+                          alt=""
+                          style={{ width: "18px", margin: "0px 5px 0px 0px" }}
+                        />
+                        {item?.projectCityName ? item?.projectCityName : "City"},
+                        {item?.projectStateName
+                          ? item?.projectStateName
+                          : "State"}
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "max-content",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box sx={{ mb: "5px" }}>status</Box>
+                      <Button
+                        size="small"
+                        sx={{
+                          borderRadius: "8.538px",
+                          background: "#00B26A",
+                          border: "1px solid #00B26A",
+                          px: { xs: 1, sm: 2 },
+                          py: { xs: "5px", sm: "7px" },
+                          color: "#FFF",
+                          fontFamily: "Poppins",
+                          fontSize: { xs: "10px", sm: "12px" },
+                          fontStyle: "normal",
+                          fontWeight: "500",
+                          lineHeight: "normal",
+                          "&:hover": {
+                            background: "transparent",
+                            color: "#00B26A",
+                          },
+                        }}
+                        disabled={item?.status === true ? true : false}
+                        onClick={() => {
+                          updateProjectStatus(item?._id);
+                        }}
+                      >
+                        {item?.status === true ? "Confirmed" : "Confirm"}
+                      </Button>
+                    </Box>
+                  </Stack>
+                  {/* verify button */}
+                  {item?.status === true && (
+                    <Box
+                      sx={{
+                        px: { xs: 2, sm: 3.5, md: 5 },
                         py: { xs: 1, sm: 2 },
                       }}
                     >
-                      <Verified sx={{ fontSize: { xs: "12px", sm: "15px" } }} />
-                      Verified
+                      <Box
+                        sx={{
+                          borderRadius: "8.538px",
+                          background: "#3790FF",
+                          color: "#FFF",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: { xs: 0.4, sm: 0.7 },
+                          fontFamily: "Poppins",
+                          fontSize: { xs: "12px", sm: "15px" },
+                          fontStyle: "normal",
+                          fontWeight: "600",
+                          lineHeight: "normal",
+                          py: { xs: 1, sm: 2 },
+                        }}
+                      >
+                        <Verified sx={{ fontSize: { xs: "12px", sm: "15px" } }} />
+                        Verified
+                      </Box>
                     </Box>
-                  </Box>
-                )}
-              </Box>
-            ))}
+                  )}
+                </Box>
+              ))}
           </Stack>
         </Box>
       ) : (
